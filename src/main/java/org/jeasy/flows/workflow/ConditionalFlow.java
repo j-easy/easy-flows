@@ -49,7 +49,7 @@ public class ConditionalFlow extends AbstractWorkFlow {
     private Work toExecute, nextOnPredicateSuccess, nextOnPredicateFailure;
     private WorkReportPredicate predicate;
 
-    public ConditionalFlow(String name, Work toExecute, Work nextOnPredicateSuccess, Work nextOnPredicateFailure, WorkReportPredicate predicate) {
+    ConditionalFlow(String name, Work toExecute, Work nextOnPredicateSuccess, Work nextOnPredicateFailure, WorkReportPredicate predicate) {
         super(name);
         this.toExecute = toExecute;
         this.nextOnPredicateSuccess = nextOnPredicateSuccess;

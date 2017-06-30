@@ -27,7 +27,6 @@ import org.jeasy.flows.work.Work;
 import org.jeasy.flows.work.WorkReport;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,22 +43,9 @@ public class SequentialFlow extends AbstractWorkFlow {
 
     private List<Work> works = new ArrayList<>();
 
-    public SequentialFlow(String name) {
-        super(name);
-        this.works = new ArrayList<>();
-    }
-
-    public SequentialFlow(String name, Work... works) {
-        this(name, Arrays.asList(works));
-    }
-
-    public SequentialFlow(String name, List<Work> works) {
+    SequentialFlow(String name, List<Work> works) {
         super(name);
         this.works.addAll(works);
-    }
-
-    public void add(Work work) {
-        works.add(work);
     }
 
     /**

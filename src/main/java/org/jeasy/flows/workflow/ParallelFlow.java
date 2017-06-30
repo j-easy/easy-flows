@@ -51,14 +51,10 @@ public class ParallelFlow extends AbstractWorkFlow {
     private List<Work> works = new ArrayList<>();
     private ExecutorService workExecutor;
 
-    public ParallelFlow(String name, List<Work> works) {
+    ParallelFlow(String name, List<Work> works) {
         super(name);
         this.works.addAll(works);
         this.workExecutor = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
-    }
-
-    public ParallelFlow(String name, Work... works) {
-        this(name, Arrays.asList(works));
     }
 
     /**

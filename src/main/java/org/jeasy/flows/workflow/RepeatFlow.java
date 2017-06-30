@@ -40,7 +40,7 @@ public class RepeatFlow extends AbstractWorkFlow {
     private Work work;
     private WorkReportPredicate predicate;
 
-    public RepeatFlow(String name, Work work, WorkReportPredicate predicate) {
+    RepeatFlow(String name, Work work, WorkReportPredicate predicate) {
         super(name);
         this.work = work;
         this.predicate = predicate;
