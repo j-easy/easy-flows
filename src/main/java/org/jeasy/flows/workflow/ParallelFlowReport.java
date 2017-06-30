@@ -42,7 +42,7 @@ public class ParallelFlowReport implements WorkReport {
      * Create a new {@link ParallelFlowReport}.
      */
     public ParallelFlowReport() {
-        reports = new ArrayList<>();
+        this(new ArrayList<>());
     }
 
     /**
@@ -62,13 +62,12 @@ public class ParallelFlowReport implements WorkReport {
         return reports;
     }
 
-    /**
-     * Add a work report.
-     *
-     * @param workReport to add
-     */
-    public void add(WorkReport workReport) {
+    void add(WorkReport workReport) {
         reports.add(workReport);
+    }
+
+    void addAll(List<WorkReport> workReports) {
+        reports.addAll(workReports);
     }
 
     /**

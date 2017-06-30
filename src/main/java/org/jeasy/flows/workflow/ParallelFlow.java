@@ -30,14 +30,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
  * A parallel flow executes a set of works in parallel.
  *
- * The status of a parallel flow is set to:
+ * The status of a parallel flow execution is defined as:
  *
  * <ul>
  *     <li>{@link org.jeasy.flows.work.WorkStatus#COMPLETED}: If all works have successfully completed</li>
@@ -49,20 +46,12 @@ import java.util.concurrent.Future;
 public class ParallelFlow extends AbstractWorkFlow {
 
     private List<Work> works = new ArrayList<>();
-    private ExecutorService workExecutor;
+    private ParallelFlowExecutor workExecutor;
 
-    ParallelFlow(String name, List<Work> works) {
+    ParallelFlow(String name, List<Work> works, ParallelFlowExecutor parallelFlowExecutor) {
         super(name);
         this.works.addAll(works);
-        this.workExecutor = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
-    }
-
-    /**
-     * <strong>Warning: If you use a custom executor service, it will be shutdown at the end of this parallel flow.</strong>
-     * @param workExecutor to use to execute works in parallel
-     */
-    public void setWorkExecutor(ExecutorService workExecutor) {
-        this.workExecutor = workExecutor;
+        this.workExecutor = parallelFlowExecutor;
     }
 
     /**
@@ -70,33 +59,8 @@ public class ParallelFlow extends AbstractWorkFlow {
      */
     public ParallelFlowReport call() {
         ParallelFlowReport workFlowReport = new ParallelFlowReport();
-        List<Future<WorkReport>> reportFutures = new ArrayList<Future<WorkReport>>();
-        for (Work work : works) {
-            Future<WorkReport> reportFuture = workExecutor.submit(work);
-            reportFutures.add(reportFuture);
-        }
-
-        // poll for work completion
-        int finishedWorks = works.size();
-        // FIXME polling futures for completion, not sure this is the best way to run callables in parallel and wait them for completion (use CompletionService??)
-        // TODO extract in a separate class that, given a list of works, run them in parallel and return their reports
-        while (finishedWorks > 0) {
-            for (Future<WorkReport> future : reportFutures) {
-                if (future != null && future.isDone()) {
-                    WorkReport workReport;
-                    try {
-                        workReport = future.get();
-                        workFlowReport.add(workReport);
-                        finishedWorks--;
-                    } catch (Exception e) {
-                        throw new RuntimeException("Unable to run work", e); // TODO error message should mention which work has failed
-                    }
-                }
-            }
-        }
-        // end poll for work completion
-
-        workExecutor.shutdown();
+        List<WorkReport> workReports = workExecutor.executeInParallel(works);
+        workFlowReport.addAll(workReports);
         return workFlowReport;
     }
 
@@ -104,12 +68,10 @@ public class ParallelFlow extends AbstractWorkFlow {
 
         private String name;
         private List<Work> works;
-        private ExecutorService workExecutor;
 
         private Builder() {
             this.name = UUID.randomUUID().toString();
             this.works = new ArrayList<>();
-            this.workExecutor = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
         }
 
         public static ParallelFlow.Builder aNewParallelFlow() {
@@ -126,15 +88,8 @@ public class ParallelFlow extends AbstractWorkFlow {
             return this;
         }
 
-        public ParallelFlow.Builder using(ExecutorService workExecutor) {
-            this.workExecutor = workExecutor;
-            return this;
-        }
-
         public ParallelFlow build() {
-            ParallelFlow parallelFlow = new ParallelFlow(name, works);
-            parallelFlow.setWorkExecutor(this.workExecutor);
-            return parallelFlow;
+            return new ParallelFlow(name, works, new ParallelFlowExecutor());
         }
     }
 }

@@ -24,30 +24,59 @@
 package org.jeasy.flows.workflow;
 
 import org.assertj.core.api.Assertions;
+import org.jeasy.flows.work.DefaultWorkReport;
 import org.jeasy.flows.work.Work;
+import org.jeasy.flows.work.WorkReport;
+import org.jeasy.flows.work.WorkStatus;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class ParallelFlowTest {
+public class ParallelFlowExecutorTest {
 
     @Test
     public void call() throws Exception {
+
         // given
-        Work work1 = Mockito.mock(Work.class);
-        Work work2 = Mockito.mock(Work.class);
-        ParallelFlowExecutor parallelFlowExecutor = Mockito.mock(ParallelFlowExecutor.class);
-        List<Work> works = Arrays.asList(work1, work2);
-        ParallelFlow parallelFlow = new ParallelFlow("pf", works, parallelFlowExecutor);
+        HelloWorldWork work1 = new HelloWorldWork("work1", WorkStatus.COMPLETED);
+        HelloWorldWork work2 = new HelloWorldWork("work2", WorkStatus.FAILED);
+        ParallelFlowExecutor parallelFlowExecutor = new ParallelFlowExecutor();
 
         // when
-        ParallelFlowReport parallelFlowReport = parallelFlow.call();
+        List<WorkReport> workReports = parallelFlowExecutor.executeInParallel(Arrays.asList(work1, work2));
 
         // then
-        Assertions.assertThat(parallelFlowReport).isNotNull();
-        Mockito.verify(parallelFlowExecutor).executeInParallel(works);
+        Assertions.assertThat(workReports).hasSize(2);
+        Assertions.assertThat(work1.isExecuted()).isTrue();
+        Assertions.assertThat(work2.isExecuted()).isTrue();
+    }
+
+    class HelloWorldWork implements Work {
+
+        private String name;
+        private WorkStatus status;
+        private boolean executed;
+
+        HelloWorldWork(String name, WorkStatus status) {
+            this.name = name;
+            this.status = status;
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        public WorkReport call() {
+            executed = true;
+            return new DefaultWorkReport(status);
+        }
+
+        public boolean isExecuted() {
+            return executed;
+        }
     }
 
 }
