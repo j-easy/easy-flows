@@ -23,6 +23,11 @@
  */
 package org.jeasy.flows.work;
 
+/**
+ * Work execution status enumeration
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com).
+ */
 public enum WorkStatus {
     FAILED,
     COMPLETED

@@ -23,10 +23,24 @@
  */
 package org.jeasy.flows.work;
 
+/**
+ * Report of work execution.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public interface WorkReport {
 
+    /**
+     * Get work execution status.
+     * @return execution status
+     */
     WorkStatus getStatus();
 
+    /**
+     * Get error if any.
+     *
+     * @return error
+     */
     Throwable getError();
 
 }

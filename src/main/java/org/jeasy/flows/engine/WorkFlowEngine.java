@@ -26,8 +26,19 @@ package org.jeasy.flows.engine;
 import org.jeasy.flows.work.WorkReport;
 import org.jeasy.flows.workflow.WorkFlow;
 
+/**
+ * Interface for workflow engine.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public interface WorkFlowEngine {
 
+    /**
+     * Run the given workflow and return its report.
+     *
+     * @param workFlow to run
+     * @return workflow report
+     */
     WorkReport run(WorkFlow workFlow);
 
 }

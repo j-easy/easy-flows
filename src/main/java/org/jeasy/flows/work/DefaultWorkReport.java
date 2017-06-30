@@ -23,15 +23,31 @@
  */
 package org.jeasy.flows.work;
 
+/**
+ * Default implementation of {@link WorkReport}.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class DefaultWorkReport implements WorkReport {
 
     private WorkStatus status;
     private Throwable error;
 
+    /**
+     * Create a new {@link DefaultWorkReport}.
+     *
+     * @param status of work
+     */
     public DefaultWorkReport(WorkStatus status) {
         this.status = status;
     }
 
+    /**
+     * Create a new {@link DefaultWorkReport}.
+     *
+     * @param status of work
+     * @param error if any
+     */
     public DefaultWorkReport(WorkStatus status, Throwable error) {
         this(status);
         this.error = error;

@@ -25,6 +25,11 @@ package org.jeasy.flows.work;
 
 import java.util.UUID;
 
+/**
+ * No operation work.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class NoOpWork implements Work {
 
     @Override

@@ -30,6 +30,20 @@ import org.jeasy.flows.work.WorkReportPredicate;
 
 import java.util.UUID;
 
+/**
+ * A conditional flow is defined by 4 artifacts:
+ *
+ * <ul>
+ *     <li>The work to execute first</li>
+ *     <li>A predicate for the conditional logic</li>
+ *     <li>The work to execute if the predicate is satisfied</li>
+ *     <li>The work to execute if the predicate is not satisfied (optional)</li>
+ * </ul>
+ *
+ * @see ConditionalFlow.Builder
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class ConditionalFlow extends AbstractWorkFlow {
 
     private Work toExecute, nextOnPredicateSuccess, nextOnPredicateFailure;
@@ -43,6 +57,9 @@ public class ConditionalFlow extends AbstractWorkFlow {
         this.predicate = predicate;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public WorkReport call() {
         WorkReport jobReport = toExecute.call();
         if (predicate.apply(jobReport)) {

@@ -34,6 +34,18 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+/**
+ * A parallel flow executes a set of works in parallel.
+ *
+ * The status of a parallel flow is set to:
+ *
+ * <ul>
+ *     <li>{@link org.jeasy.flows.work.WorkStatus#COMPLETED}: If all works have successfully completed</li>
+ *     <li>{@link org.jeasy.flows.work.WorkStatus#FAILED}: If one of the works has failed</li>
+ * </ul>
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class ParallelFlow extends AbstractWorkFlow {
 
     private List<Work> works = new ArrayList<>();
@@ -57,6 +69,9 @@ public class ParallelFlow extends AbstractWorkFlow {
         this.workExecutor = workExecutor;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public ParallelFlowReport call() {
         ParallelFlowReport workFlowReport = new ParallelFlowReport();
         List<Future<WorkReport>> reportFutures = new ArrayList<Future<WorkReport>>();

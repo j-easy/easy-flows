@@ -25,5 +25,10 @@ package org.jeasy.flows.workflow;
 
 import org.jeasy.flows.work.Work;
 
+/**
+ * Interface to define a work flow.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public interface WorkFlow extends Work {
 }

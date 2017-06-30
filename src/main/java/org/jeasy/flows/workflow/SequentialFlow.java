@@ -33,6 +33,13 @@ import java.util.UUID;
 
 import static org.jeasy.flows.work.WorkStatus.FAILED;
 
+/**
+ * A sequential flow executes a set of works in sequence.
+ *
+ * If a work fails, next works in the pipeline will be skipped.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class SequentialFlow extends AbstractWorkFlow {
 
     private List<Work> works = new ArrayList<>();
@@ -55,6 +62,9 @@ public class SequentialFlow extends AbstractWorkFlow {
         works.add(work);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public WorkReport call() {
         WorkReport workReport = null;
         for (Work work : works) {

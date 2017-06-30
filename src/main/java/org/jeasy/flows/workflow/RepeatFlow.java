@@ -30,6 +30,11 @@ import org.jeasy.flows.work.WorkReport;
 
 import java.util.UUID;
 
+/**
+ * A repeat flow executes a work repeatedly until its report is satisfied by a given predicate.
+ *
+ * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
+ */
 public class RepeatFlow extends AbstractWorkFlow {
 
     private Work work;
@@ -41,6 +46,9 @@ public class RepeatFlow extends AbstractWorkFlow {
         this.predicate = predicate;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public WorkReport call() {
         WorkReport workReport;
         do {
