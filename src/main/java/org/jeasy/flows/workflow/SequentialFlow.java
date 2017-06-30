@@ -29,6 +29,8 @@ import org.jeasy.flows.work.WorkReport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.jeasy.flows.work.WorkStatus.FAILED;
 
@@ -40,6 +42,8 @@ import static org.jeasy.flows.work.WorkStatus.FAILED;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class SequentialFlow extends AbstractWorkFlow {
+
+    private static final Logger LOGGER = Logger.getLogger(SequentialFlow.class.getName());
 
     private List<Work> works = new ArrayList<>();
 
@@ -56,7 +60,8 @@ public class SequentialFlow extends AbstractWorkFlow {
         for (Work work : works) {
             workReport = work.call();
             if (workReport != null && FAILED.equals(workReport.getStatus())) {
-                break; // stop on first failed work
+                LOGGER.log(Level.INFO, "Work ''{0}'' has failed, skipping subsequent works", work.getName());
+                break;
             }
         }
         return workReport;
