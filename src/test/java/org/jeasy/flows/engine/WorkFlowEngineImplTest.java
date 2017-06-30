@@ -28,7 +28,6 @@ import org.jeasy.flows.work.Work;
 import org.jeasy.flows.work.WorkReport;
 import org.jeasy.flows.work.WorkStatus;
 import org.jeasy.flows.workflow.*;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -55,9 +54,12 @@ public class WorkFlowEngineImplTest {
         Mockito.verify(workFlow).call();
     }
 
-    @Ignore("This is not really a unit test, but serves as an example of how to compose a workflow and execute it")
+    /**
+     * The following tests are not really unit tests, but serve as examples of how to create a workflow and execute it
+     */
+
     @Test
-    public void defineWorkFlowAndExecuteIt() throws Exception {
+    public void composeWorkFlowFromSeparateFlowsAndExecuteIt() throws Exception {
 
         PrintMessageWork work1 = new PrintMessageWork("foo");
         PrintMessageWork work2 = new PrintMessageWork("hello");
@@ -91,7 +93,6 @@ public class WorkFlowEngineImplTest {
         System.out.println("workflow report = " + workReport);
     }
 
-    @Ignore("This is not really a unit test, but serves as an example of how to create a workflow inline and execute it")
     @Test
     public void defineWorkFlowInlineAndExecuteIt() throws Exception {
 
