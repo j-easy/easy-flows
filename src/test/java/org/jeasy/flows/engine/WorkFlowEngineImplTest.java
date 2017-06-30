@@ -34,7 +34,6 @@ import org.mockito.Mockito;
 
 import static org.jeasy.flows.engine.WorkFlowEngineBuilder.aNewWorkFlowEngine;
 import static org.jeasy.flows.work.WorkReportPredicate.COMPLETED;
-import static org.jeasy.flows.work.WorkReportPredicate.TimesPredicate.times;
 import static org.jeasy.flows.workflow.ConditionalFlow.Builder.aNewConditionalFlow;
 import static org.jeasy.flows.workflow.ParallelFlow.Builder.aNewParallelFlow;
 import static org.jeasy.flows.workflow.RepeatFlow.Builder.aNewRepeatFlow;
@@ -68,7 +67,7 @@ public class WorkFlowEngineImplTest {
         RepeatFlow repeatFlow = aNewRepeatFlow()
                 .named("print foo 3 times")
                 .repeat(work1)
-                .until(times(3))
+                .times(3)
                 .build();
 
         ParallelFlow parallelFlow = aNewParallelFlow()
@@ -105,7 +104,7 @@ public class WorkFlowEngineImplTest {
                 .execute(aNewRepeatFlow()
                             .named("print foo 3 times")
                             .repeat(work1)
-                            .until(times(3))
+                            .times(3)
                             .build())
                 .then(aNewConditionalFlow()
                         .execute(aNewParallelFlow()

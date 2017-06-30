@@ -83,6 +83,10 @@ public class RepeatFlow extends AbstractWorkFlow {
             return this;
         }
 
+        public RepeatFlow.Builder times(int times) {
+            return until(WorkReportPredicate.TimesPredicate.times(times));
+        }
+
         public RepeatFlow.Builder until(WorkReportPredicate predicate) {
             this.predicate = predicate;
             return this;
