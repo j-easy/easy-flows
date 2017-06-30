@@ -73,7 +73,7 @@ This workflow can be illustrated as follows:
 
 * `flow1` is a `RepeatFlow` of `work1` which is printing "foo" three times
 * `flow2` is a `ParallelFlow` of `work2` and `work3` which respectively print "hello" and "world" in parallel
-* `flow3` is a `ConditionalFlow`. It first executes `flow2` (a workflow is a also a work), then if `flow2` is completed, it executes `work4`, otherwise `work5` which respectively print "ok" and "nok"
+* `flow3` is a `ConditionalFlow`. It first executes `flow2` (a workflow is also a work), then if `flow2` is completed, it executes `work4`, otherwise `work5` which respectively print "ok" and "nok"
 * `flow4` is a `SequentialFlow`. It executes `flow1` then `flow3` in sequence.
 
 With Easy Flows, this workflow can be implemented with the following snippet:
