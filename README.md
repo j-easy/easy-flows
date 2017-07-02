@@ -109,6 +109,17 @@ WorkReport workReport = workFlowEngine.run(workflow);
 This is not a very useful workflow, but just to give you an idea about how to write workflows with Easy Flows.
 You can find more details about all of this in the [wiki](https://github.com/j-easy/easy-flows/wiki).
 
+## Why Easy Flows?
+
+Easy Flows was created because of the lack of a simple open source workflow engine that can orchestrate `Callable` Java objects.
+Why every single workflow engine out there is trying to implement BPMN? There is nothing wrong with BPMN, but it is not easy
+( [538 pages specification??](http://www.omg.org/spec/BPMN/2.0/PDF) ). Same thing for [BPEL](http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.pdf)..
+
+There are currently good workflow engines, but since they try to implement BPMN, they are not easy to use and are often misused.
+Most of BPMN concepts are not essential to many applications, and building such applications on top of a heavy engine is not efficient.
+
+Easy Flows tries to provide a simple alternative with natural APIs that are easy to think about along with basic flows that most small/medium sized applications would require. If your business process requires a A0 paper to be drawn down, Easy Flows is probably not the right choice for you.
+
 ## Contribution
 
 You are welcome to contribute to the project with pull requests on GitHub.
