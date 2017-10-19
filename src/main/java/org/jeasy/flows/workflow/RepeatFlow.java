@@ -70,7 +70,7 @@ public class RepeatFlow extends AbstractWorkFlow {
         }
 
         public static RepeatFlow.Builder aNewRepeatFlow() {
-            return new Builder();
+            return new RepeatFlow.Builder();
         }
 
         public RepeatFlow.Builder named(String name) {
