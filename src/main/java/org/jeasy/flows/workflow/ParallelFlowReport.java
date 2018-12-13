@@ -90,7 +90,6 @@ public class ParallelFlowReport<T> implements WorkReport<T> {
       if (report.getStatus().equals(WorkStatus.FAILED)) {
         return WorkStatus.FAILED;
       }
-      collectData.putAll(report.getCollectData());
     }
     return WorkStatus.COMPLETED;
   }
@@ -124,6 +123,10 @@ public class ParallelFlowReport<T> implements WorkReport<T> {
    */
   @Override
   public Map<String, T> getCollectData() {
+    reports.forEach(t -> {
+      collectData.putAll(t.getCollectData());
+
+    });
     return collectData;
   }
 

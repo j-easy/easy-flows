@@ -20,8 +20,8 @@
  */
 package org.jeasy.flows.work;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Default implementation of {@link WorkReport}.
@@ -43,7 +43,7 @@ public class DefaultWorkReport<T> implements WorkReport<T> {
    */
   public DefaultWorkReport(WorkStatus status) {
     this.status = status;
-    collectData = new ConcurrentHashMap<>();
+    collectData = new HashMap<>();
   }
 
   /**
@@ -83,7 +83,7 @@ public class DefaultWorkReport<T> implements WorkReport<T> {
   }
 
   public void setCollectData(Map<String, T> collectData) {
-    collectData.putAll(collectData);
+    this.collectData.putAll(collectData);
   }
 
 

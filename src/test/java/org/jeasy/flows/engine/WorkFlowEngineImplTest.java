@@ -26,6 +26,9 @@ import static org.jeasy.flows.workflow.ConditionalFlow.Builder.aNewConditionalFl
 import static org.jeasy.flows.workflow.ParallelFlow.Builder.aNewParallelFlow;
 import static org.jeasy.flows.workflow.RepeatFlow.Builder.aNewRepeatFlow;
 import static org.jeasy.flows.workflow.SequentialFlow.Builder.aNewSequentialFlow;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.assertj.core.util.Maps;
 import org.jeasy.flows.work.DefaultWorkReport;
 import org.jeasy.flows.work.Work;
 import org.jeasy.flows.work.WorkReport;
@@ -40,6 +43,7 @@ import org.mockito.Mockito;
 
 public class WorkFlowEngineImplTest {
 
+  public static AtomicInteger ai = new AtomicInteger(0);
   private WorkFlowEngine workFlowEngine = new WorkFlowEngineImpl();
 
   @Test
@@ -51,7 +55,7 @@ public class WorkFlowEngineImplTest {
     workFlowEngine.run(workFlow);
 
     // then
-    Mockito.verify(workFlow).call();
+    Mockito.verify(workFlow).call(null);
   }
 
   /**
@@ -66,6 +70,7 @@ public class WorkFlowEngineImplTest {
     PrintMessageWork work2 = new PrintMessageWork("hello");
     PrintMessageWork work3 = new PrintMessageWork("world");
     PrintMessageWork work4 = new PrintMessageWork("done");
+    PrintMessageWork work5 = new PrintMessageWork("beijing");
 
     RepeatFlow repeatFlow =
         aNewRepeatFlow().named("print foo 3 times").repeat(work1).times(3).build();
@@ -73,8 +78,10 @@ public class WorkFlowEngineImplTest {
     ParallelFlow parallelFlow = aNewParallelFlow().named("print 'hello' and 'world' in parallel")
         .execute(work2, work3).build();
 
+    SequentialFlow delayFlow = aNewSequentialFlow().execute(work5).then(work4).build();
+
     ConditionalFlow conditionalFlow =
-        aNewConditionalFlow().execute(parallelFlow).when(COMPLETED).then(work4).build();
+        aNewConditionalFlow().execute(parallelFlow).when(COMPLETED).then(delayFlow).build();
 
     SequentialFlow sequentialFlow =
         aNewSequentialFlow().execute(repeatFlow).then(conditionalFlow).build();
@@ -84,42 +91,58 @@ public class WorkFlowEngineImplTest {
     System.out.println("workflow report = " + workReport);
   }
 
-  @Test
-  public void defineWorkFlowInlineAndExecuteIt() throws Exception {
+  // @Test
+  // public void defineWorkFlowInlineAndExecuteIt() throws Exception {
+  //
+  // PrintMessageWork work1 = new PrintMessageWork("foo");
+  // PrintMessageWork work2 = new PrintMessageWork("hello");
+  // PrintMessageWork work3 = new PrintMessageWork("world");
+  // PrintMessageWork work4 = new PrintMessageWork("done");
+  //
+  // WorkFlow workflow = aNewSequentialFlow()
+  // .execute(aNewRepeatFlow().named("print foo 3 times").repeat(work1).times(3).build())
+  // .then(aNewConditionalFlow().execute(aNewParallelFlow()
+  // .named("print 'hello' and 'world' in parallel").execute(work2, work3).build())
+  // .when(COMPLETED).then(work4).build())
+  // .build();
+  //
+  // WorkFlowEngine workFlowEngine = aNewWorkFlowEngine().build();
+  // WorkReport workReport = workFlowEngine.run(workflow);
+  // System.out.println("workflow report = " + workReport);
+  // }
 
-    PrintMessageWork work1 = new PrintMessageWork("foo");
-    PrintMessageWork work2 = new PrintMessageWork("hello");
-    PrintMessageWork work3 = new PrintMessageWork("world");
-    PrintMessageWork work4 = new PrintMessageWork("done");
+  static class PrintMessageWork implements Work<String> {
 
-    WorkFlow workflow = aNewSequentialFlow()
-        .execute(aNewRepeatFlow().named("print foo 3 times").repeat(work1).times(3).build())
-        .then(aNewConditionalFlow().execute(aNewParallelFlow()
-            .named("print 'hello' and 'world' in parallel").execute(work2, work3).build())
-            .when(COMPLETED).then(work4).build())
-        .build();
 
-    WorkFlowEngine workFlowEngine = aNewWorkFlowEngine().build();
-    WorkReport workReport = workFlowEngine.run(workflow);
-    System.out.println("workflow report = " + workReport);
-  }
+    private String name;
 
-  static class PrintMessageWork implements Work {
-
-    private String message;
-
-    public PrintMessageWork(String message) {
-      this.message = message;
+    public PrintMessageWork(String name) {
+      this.name = name;
     }
 
     public String getName() {
-      return "print message work";
+      return name;
     }
 
-    public WorkReport call() {
-      System.out.println(message);
-      return new DefaultWorkReport(WorkStatus.COMPLETED);
+    public WorkReport call(List param) {
+      System.out.println("---------------new work---------------");
+      if (param != null) {
+        System.out.println("*********pre work data start **********");
+        param.forEach(t -> {
+          WorkReport wr = (WorkReport) t;
+          System.out.println(wr.getCollectData());
+        });
+        System.out.println("*********pre work data end **********");
+
+      }
+      System.out.println(name);
+      DefaultWorkReport dwr = new DefaultWorkReport(WorkStatus.COMPLETED);
+      dwr.setCollectData(Maps.newHashMap(getName(), "haha data" + ai.addAndGet(1)));
+
+      return dwr;
     }
+
+
 
   }
 }

@@ -20,7 +20,7 @@
  */
 package org.jeasy.flows.work;
 
-import java.util.concurrent.Callable;
+import java.util.List;
 
 /**
  * Implementations of this interface must:
@@ -31,9 +31,10 @@ import java.util.concurrent.Callable;
  *
  * Work name must be unique within a workflow.
  */
-public interface Work<T> extends Callable<WorkReport<T>> {
+public interface Work<T> extends DefineCallable<WorkReport<T>> {
 
   String getName();
 
-  WorkReport<T> call();
+  WorkReport<T> call(List<WorkReport<T>> param);
+
 }
