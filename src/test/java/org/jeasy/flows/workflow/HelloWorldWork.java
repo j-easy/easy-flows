@@ -1,5 +1,5 @@
 /**
- * All rights Reserved, Designed By www.didichuxing.com.
+ * All rights Reserved
  * 
  * @Title: t.java <\br>
  * @Package org.jeasy.flows.workflow <\br>
@@ -7,7 +7,7 @@
  * @author: zyt <\br>
  * @date: 2018年12月13日 下午5:28:10 <\br>
  * @version V1.0 <\br>
- * @Copyright: 2018 www.didichuxing Inc. All rights reserved.<\br>
+ * @Copyright: 2018 .<\br>
  */
 
 package org.jeasy.flows.workflow;
