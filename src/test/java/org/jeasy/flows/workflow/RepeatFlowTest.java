@@ -36,10 +36,10 @@ public class RepeatFlowTest {
         RepeatFlow.Builder.aNewRepeatFlow().repeat(work).until(predicate).build();
 
     // when
-    repeatFlow.call(null);
+    repeatFlow.call(null, null);
 
     // then
-    Mockito.verify(work, Mockito.times(1)).call(null);
+    Mockito.verify(work, Mockito.times(1)).call(null, null);
   }
 
   @Test
@@ -49,10 +49,10 @@ public class RepeatFlowTest {
     RepeatFlow repeatFlow = RepeatFlow.Builder.aNewRepeatFlow().repeat(work).times(3).build();
 
     // when
-    repeatFlow.call(null);
+    repeatFlow.call(null, null);
 
     // then
-    Mockito.verify(work, Mockito.times(3)).call(null);
+    Mockito.verify(work, Mockito.times(3)).call(null, null);
   }
 
 }

@@ -32,6 +32,7 @@ import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jeasy.flows.work.Work;
+import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReport;
 
 class ParallelFlowExecutor {
@@ -55,7 +56,8 @@ class ParallelFlowExecutor {
         Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());;
   }
 
-  List<WorkReport> executeInParallel(List<Work> works, List<WorkReport> reports) {
+  List<WorkReport> executeInParallel(List<Work> works, List<WorkReport> reports,
+      WorkContext context) {
     // re-init in case it has been shut down in a previous run (See question 3)
     if (workExecutor.isShutdown()) {
       workExecutor = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
@@ -69,7 +71,7 @@ class ParallelFlowExecutor {
 
         @Override
         public WorkReport call() throws Exception {
-          return work.call(reports);
+          return work.call(reports, context);
         }
 
 

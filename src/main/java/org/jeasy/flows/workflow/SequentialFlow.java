@@ -28,6 +28,7 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jeasy.flows.work.Work;
+import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReport;
 
 /**
@@ -51,11 +52,11 @@ public class SequentialFlow extends AbstractWorkFlow {
   /**
    * {@inheritDoc}
    */
-  public WorkReport call(List param) {
+  public WorkReport call(List param, WorkContext context) {
     WorkReport workReport = null;
     List rs = param;
     for (Work work : works) {
-      workReport = work.call(rs);
+      workReport = work.call(rs, context);
       rs = Arrays.asList(workReport);
       if (workReport != null && FAILED.equals(workReport.getStatus())) {
         LOGGER.log(Level.INFO, "Work ''{0}'' has failed, skipping subsequent works",

@@ -35,6 +35,6 @@ public interface Work<T> extends DefineCallable<WorkReport<T>> {
 
   String getName();
 
-  WorkReport<T> call(List<WorkReport<T>> param);
+  WorkReport<T> call(List<WorkReport<T>> param, WorkContext context);
 
 }

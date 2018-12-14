@@ -22,6 +22,7 @@ package org.jeasy.flows.engine;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReport;
 import org.jeasy.flows.workflow.WorkFlow;
 
@@ -29,9 +30,10 @@ class WorkFlowEngineImpl implements WorkFlowEngine {
 
   private static final Logger LOGGER = Logger.getLogger(WorkFlowEngineImpl.class.getName());
 
-  public WorkReport run(WorkFlow workFlow) {
+  public WorkReport run(WorkFlow workFlow, WorkContext context) {
     LOGGER.log(Level.INFO, "Running workflow ''{0}''", workFlow.getName());
-    return workFlow.call(null);
+
+    return workFlow.call(null, context);
   }
 
 }

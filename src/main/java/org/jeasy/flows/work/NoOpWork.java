@@ -44,7 +44,7 @@ public class NoOpWork implements Work {
    * @see org.jeasy.flows.work.Work#call(java.util.List)
    */
   @Override
-  public WorkReport call(List param) {
+  public WorkReport call(List param, WorkContext context) {
     return new DefaultWorkReport(WorkStatus.COMPLETED);
 
   }

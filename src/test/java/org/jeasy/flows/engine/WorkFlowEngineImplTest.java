@@ -31,6 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.assertj.core.util.Maps;
 import org.jeasy.flows.work.DefaultWorkReport;
 import org.jeasy.flows.work.Work;
+import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReport;
 import org.jeasy.flows.work.WorkStatus;
 import org.jeasy.flows.workflow.ConditionalFlow;
@@ -52,10 +53,10 @@ public class WorkFlowEngineImplTest {
     WorkFlow workFlow = Mockito.mock(WorkFlow.class);
 
     // when
-    workFlowEngine.run(workFlow);
+    workFlowEngine.run(workFlow, null);
 
     // then
-    Mockito.verify(workFlow).call(null);
+    Mockito.verify(workFlow).call(null, null);
   }
 
   /**
@@ -87,7 +88,7 @@ public class WorkFlowEngineImplTest {
         aNewSequentialFlow().execute(repeatFlow).then(conditionalFlow).build();
 
     WorkFlowEngine workFlowEngine = aNewWorkFlowEngine().build();
-    WorkReport workReport = workFlowEngine.run(sequentialFlow);
+    WorkReport workReport = workFlowEngine.run(sequentialFlow, null);
     System.out.println("workflow report = " + workReport);
   }
 
@@ -124,7 +125,7 @@ public class WorkFlowEngineImplTest {
       return name;
     }
 
-    public WorkReport call(List param) {
+    public WorkReport call(List param, WorkContext context) {
       System.out.println("---------------new work---------------");
       if (param != null) {
         System.out.println("*********pre work data start **********");

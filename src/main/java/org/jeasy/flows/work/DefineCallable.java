@@ -23,5 +23,5 @@ import java.util.List;
  */
 public interface DefineCallable<T> {
 
-  T call(List<T> param);
+  T call(List<T> param, WorkContext context);
 }

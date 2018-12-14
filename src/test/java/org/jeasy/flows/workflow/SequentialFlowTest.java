@@ -37,13 +37,13 @@ public class SequentialFlowTest {
         SequentialFlow.Builder.aNewSequentialFlow().execute(work1).then(work2).then(work3).build();
 
     // when
-    sequentialFlow.call(null);
+    sequentialFlow.call(null, null);
 
     // then
     InOrder inOrder = Mockito.inOrder(work1, work2, work3);
-    inOrder.verify(work1, Mockito.times(1)).call(null);
-    inOrder.verify(work2, Mockito.times(1)).call(null);
-    inOrder.verify(work3, Mockito.times(1)).call(null);
+    inOrder.verify(work1, Mockito.times(1)).call(null, null);
+    inOrder.verify(work2, Mockito.times(1)).call(null, null);
+    inOrder.verify(work3, Mockito.times(1)).call(null, null);
   }
 
 }

@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.UUID;
 import org.jeasy.flows.work.NoOpWork;
 import org.jeasy.flows.work.Work;
+import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReport;
 import org.jeasy.flows.work.WorkReportPredicate;
 
@@ -46,10 +47,10 @@ public class RepeatFlow extends AbstractWorkFlow {
   /**
    * {@inheritDoc}
    */
-  public WorkReport call(List param) {
+  public WorkReport call(List param, WorkContext context) {
     WorkReport workReport;
     do {
-      workReport = work.call(param);
+      workReport = work.call(param, context);
     } while (predicate.apply(workReport));
     return workReport;
   }

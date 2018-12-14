@@ -39,7 +39,7 @@ public class ParallelFlowExecutorTest {
 
     // when
     List<WorkReport> workReports =
-        parallelFlowExecutor.executeInParallel(Arrays.asList(work1, work2), null);
+        parallelFlowExecutor.executeInParallel(Arrays.asList(work1, work2), null, null);
 
     // then
     Assertions.assertThat(workReports).hasSize(2);

@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.UUID;
 import org.jeasy.flows.work.NoOpWork;
 import org.jeasy.flows.work.Work;
+import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReport;
 import org.jeasy.flows.work.WorkReportPredicate;
 
@@ -59,14 +60,14 @@ public class ConditionalFlow extends AbstractWorkFlow {
   /**
    * {@inheritDoc}
    */
-  public WorkReport call(List param) {
-    WorkReport jobReport = toExecute.call(param);
+  public WorkReport call(List param, WorkContext context) {
+    WorkReport jobReport = toExecute.call(param, context);
     if (predicate.apply(jobReport)) {
-      jobReport = nextOnPredicateSuccess.call(Arrays.asList(jobReport));
+      jobReport = nextOnPredicateSuccess.call(Arrays.asList(jobReport), context);
     } else {
       if (nextOnPredicateFailure != null && !(nextOnPredicateFailure instanceof NoOpWork)) { // else
         // optional
-        jobReport = nextOnPredicateFailure.call(Arrays.asList(jobReport));
+        jobReport = nextOnPredicateFailure.call(Arrays.asList(jobReport), context);
       }
     }
     return jobReport;

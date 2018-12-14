@@ -39,11 +39,11 @@ public class ParallelFlowTest {
     ParallelFlow parallelFlow = new ParallelFlow("pf", works, parallelFlowExecutor);
 
     // when
-    ParallelFlowReport parallelFlowReport = parallelFlow.call(null);
+    ParallelFlowReport parallelFlowReport = parallelFlow.call(null, null);
 
     // then
     Assertions.assertThat(parallelFlowReport).isNotNull();
-    Mockito.verify(parallelFlowExecutor).executeInParallel(works, null);
+    Mockito.verify(parallelFlowExecutor).executeInParallel(works, null, null);
   }
 
 }

@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import org.jeasy.flows.work.Work;
+import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReport;
 
 /**
@@ -54,9 +55,9 @@ public class ParallelFlow extends AbstractWorkFlow {
   /**
    * {@inheritDoc}
    */
-  public ParallelFlowReport call(List param) {
+  public ParallelFlowReport call(List param, WorkContext context) {
     ParallelFlowReport workFlowReport = new ParallelFlowReport();
-    List<WorkReport> workReports = workExecutor.executeInParallel(works, param);
+    List<WorkReport> workReports = workExecutor.executeInParallel(works, param, context);
     workFlowReport.setReports(workReports);
     return workFlowReport;
   }

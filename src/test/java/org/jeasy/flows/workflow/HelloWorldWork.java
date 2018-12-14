@@ -16,6 +16,7 @@ import java.util.List;
 import org.assertj.core.util.Maps;
 import org.jeasy.flows.work.DefaultWorkReport;
 import org.jeasy.flows.work.Work;
+import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReport;
 import org.jeasy.flows.work.WorkStatus;
 
@@ -43,7 +44,7 @@ public class HelloWorldWork implements Work<String> {
   }
 
   @Override
-  public WorkReport<String> call(List param) {
+  public WorkReport<String> call(List param, WorkContext context) {
     executed = true;
     DefaultWorkReport<String> dwr = new DefaultWorkReport<String>(status);
     dwr.setCollectData(Maps.newHashMap(name, "hello"));
