@@ -34,7 +34,7 @@ import java.util.List;
 public class ParallelFlowTest {
 
     @Test
-    public void call() throws Exception {
+    public void call() {
         // given
         Work work1 = Mockito.mock(Work.class);
         Work work2 = Mockito.mock(Work.class);

@@ -36,7 +36,7 @@ import java.util.List;
 public class ParallelFlowExecutorTest {
 
     @Test
-    public void call() throws Exception {
+    public void call() {
 
         // given
         HelloWorldWork work1 = new HelloWorldWork("work1", WorkStatus.COMPLETED);

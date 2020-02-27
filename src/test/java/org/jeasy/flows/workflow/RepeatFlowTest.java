@@ -31,7 +31,7 @@ import org.mockito.Mockito;
 public class RepeatFlowTest {
 
     @Test
-    public void testRepeatUntil() throws Exception {
+    public void testRepeatUntil() {
         // given
         Work work = Mockito.mock(Work.class);
         WorkReportPredicate predicate = WorkReportPredicate.ALWAYS_FALSE;
@@ -48,7 +48,7 @@ public class RepeatFlowTest {
     }
 
     @Test
-    public void testRepeatTimes() throws Exception {
+    public void testRepeatTimes() {
         // given
         Work work = Mockito.mock(Work.class);
         RepeatFlow repeatFlow = RepeatFlow.Builder.aNewRepeatFlow()

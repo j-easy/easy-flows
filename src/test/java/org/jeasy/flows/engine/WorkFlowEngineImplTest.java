@@ -43,7 +43,7 @@ public class WorkFlowEngineImplTest {
     private WorkFlowEngine workFlowEngine = new WorkFlowEngineImpl();
 
     @Test
-    public void run() throws Exception {
+    public void run() {
         // given
         WorkFlow workFlow = Mockito.mock(WorkFlow.class);
 
@@ -94,7 +94,7 @@ public class WorkFlowEngineImplTest {
     }
 
     @Test
-    public void defineWorkFlowInlineAndExecuteIt() throws Exception {
+    public void defineWorkFlowInlineAndExecuteIt() {
 
         PrintMessageWork work1 = new PrintMessageWork("foo");
         PrintMessageWork work2 = new PrintMessageWork("hello");
