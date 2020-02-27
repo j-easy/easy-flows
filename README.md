@@ -2,7 +2,7 @@
 
 <div align="center">
     <b><em>Easy Flows</em></b><br>
-    The simple, stupid rules workflow engine for Java&trade;
+    The simple, stupid workflow engine for Java&trade;
 </div>
 
 <div align="center">
