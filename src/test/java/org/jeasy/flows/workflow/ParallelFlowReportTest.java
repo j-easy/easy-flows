@@ -23,34 +23,37 @@
  */
 package org.jeasy.flows.workflow;
 
-import org.jeasy.flows.work.Work;
+import org.assertj.core.api.Assertions;
+import org.jeasy.flows.work.DefaultWorkReport;
+import org.jeasy.flows.work.WorkStatus;
+import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InOrder;
-import org.mockito.Mockito;
 
-public class SequentialFlowTest {
+public class ParallelFlowReportTest {
 
-    @Test
-    public void call() {
-        // given
-        Work work1 = Mockito.mock(Work.class);
-        Work work2 = Mockito.mock(Work.class);
-        Work work3 = Mockito.mock(Work.class);
-        SequentialFlow sequentialFlow = SequentialFlow.Builder.aNewSequentialFlow()
-                .named("testFlow")
-                .execute(work1)
-                .then(work2)
-                .then(work3)
-                .build();
+	private Exception exception;
+	private ParallelFlowReport parallelFlowReport;
 
-        // when
-        sequentialFlow.call();
+	@Before
+	public void setUp() {
+		exception = new Exception("test exception");
+		parallelFlowReport = new ParallelFlowReport();
+		parallelFlowReport.add(new DefaultWorkReport(WorkStatus.FAILED, exception));
+		parallelFlowReport.add(new DefaultWorkReport(WorkStatus.COMPLETED));
+	}
 
-        // then
-        InOrder inOrder = Mockito.inOrder(work1, work2, work3);
-        inOrder.verify(work1, Mockito.times(1)).call();
-        inOrder.verify(work2, Mockito.times(1)).call();
-        inOrder.verify(work3, Mockito.times(1)).call();
-    }
+	@Test
+	public void testGetStatus() {
+		Assertions.assertThat(parallelFlowReport.getStatus()).isEqualTo(WorkStatus.FAILED);
+	}
 
+	@Test
+	public void testGetError() {
+		Assertions.assertThat(parallelFlowReport.getError()).isEqualTo(exception);
+	}
+
+	@Test
+	public void testGetReports() {
+		Assertions.assertThat(parallelFlowReport.getReports()).hasSize(2);
+	}
 }

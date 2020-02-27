@@ -21,36 +21,26 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.jeasy.flows.workflow;
+package org.jeasy.flows.work;
 
-import org.jeasy.flows.work.Work;
+import org.assertj.core.api.Assertions;
+import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.InOrder;
-import org.mockito.Mockito;
 
-public class SequentialFlowTest {
+public class NoOpWorkTest {
 
-    @Test
-    public void call() {
-        // given
-        Work work1 = Mockito.mock(Work.class);
-        Work work2 = Mockito.mock(Work.class);
-        Work work3 = Mockito.mock(Work.class);
-        SequentialFlow sequentialFlow = SequentialFlow.Builder.aNewSequentialFlow()
-                .named("testFlow")
-                .execute(work1)
-                .then(work2)
-                .then(work3)
-                .build();
+	private NoOpWork work = new NoOpWork();
 
-        // when
-        sequentialFlow.call();
+	@Test
+	public void getName() {
+		Assertions.assertThat(work.getName()).isNotNull();
+	}
 
-        // then
-        InOrder inOrder = Mockito.inOrder(work1, work2, work3);
-        inOrder.verify(work1, Mockito.times(1)).call();
-        inOrder.verify(work2, Mockito.times(1)).call();
-        inOrder.verify(work3, Mockito.times(1)).call();
-    }
+	@Test
+	public void call() {
+		WorkReport workReport = work.call();
+		Assert.assertNotNull(workReport);
+		Assertions.assertThat(workReport.getStatus()).isEqualTo(WorkStatus.COMPLETED);
 
+	}
 }

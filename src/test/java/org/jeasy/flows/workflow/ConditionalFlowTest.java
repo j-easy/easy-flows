@@ -38,6 +38,7 @@ public class ConditionalFlowTest {
         Work nextOnPredicateFailure = Mockito.mock(Work.class);
         WorkReportPredicate predicate = WorkReportPredicate.ALWAYS_TRUE;
         ConditionalFlow conditionalFlow = ConditionalFlow.Builder.aNewConditionalFlow()
+                .named("testFlow")
                 .execute(toExecute)
                 .when(predicate)
                 .then(nextOnPredicateSuccess)
@@ -61,6 +62,7 @@ public class ConditionalFlowTest {
         Work nextOnPredicateFailure = Mockito.mock(Work.class);
         WorkReportPredicate predicate = WorkReportPredicate.ALWAYS_FALSE;
         ConditionalFlow conditionalFlow = ConditionalFlow.Builder.aNewConditionalFlow()
+                .named("anotherTestFlow")
                 .execute(toExecute)
                 .when(predicate)
                 .then(nextOnPredicateSuccess)
