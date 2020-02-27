@@ -1,6 +1,0 @@
-language: java
-sudo: false
-jdk:
-  - oraclejdk8
-after_success:
-  - mvn clean cobertura:cobertura coveralls:report
