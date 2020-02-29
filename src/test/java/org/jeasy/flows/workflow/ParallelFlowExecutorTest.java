@@ -32,6 +32,8 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ParallelFlowExecutorTest {
 
@@ -39,12 +41,14 @@ public class ParallelFlowExecutorTest {
     public void call() {
 
         // given
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
         HelloWorldWork work1 = new HelloWorldWork("work1", WorkStatus.COMPLETED);
         HelloWorldWork work2 = new HelloWorldWork("work2", WorkStatus.FAILED);
-        ParallelFlowExecutor parallelFlowExecutor = new ParallelFlowExecutor();
+        ParallelFlowExecutor parallelFlowExecutor = new ParallelFlowExecutor(executorService);
 
         // when
         List<WorkReport> workReports = parallelFlowExecutor.executeInParallel(Arrays.asList(work1, work2));
+        executorService.shutdown();
 
         // then
         Assertions.assertThat(workReports).hasSize(2);

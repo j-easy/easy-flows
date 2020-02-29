@@ -23,6 +23,9 @@
  */
 package org.jeasy.flows.engine;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import org.jeasy.flows.work.DefaultWorkReport;
 import org.jeasy.flows.work.Work;
 import org.jeasy.flows.work.WorkReport;
@@ -73,7 +76,8 @@ public class WorkFlowEngineImplTest {
                 .times(3)
                 .build();
 
-        ParallelFlow parallelFlow = aNewParallelFlow()
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        ParallelFlow parallelFlow = aNewParallelFlow(executorService)
                 .named("print 'hello' and 'world' in parallel")
                 .execute(work2, work3)
                 .build();
@@ -91,6 +95,7 @@ public class WorkFlowEngineImplTest {
 
         WorkFlowEngine workFlowEngine = aNewWorkFlowEngine().build();
         WorkReport workReport = workFlowEngine.run(sequentialFlow);
+        executorService.shutdown();
         assertThat(workReport.getStatus()).isEqualTo(WorkStatus.COMPLETED);
         System.out.println("workflow report = " + workReport);
     }
@@ -103,6 +108,7 @@ public class WorkFlowEngineImplTest {
         PrintMessageWork work3 = new PrintMessageWork("world");
         PrintMessageWork work4 = new PrintMessageWork("done");
 
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
         WorkFlow workflow = aNewSequentialFlow()
                 .execute(aNewRepeatFlow()
                             .named("print foo 3 times")
@@ -110,7 +116,7 @@ public class WorkFlowEngineImplTest {
                             .times(3)
                             .build())
                 .then(aNewConditionalFlow()
-                        .execute(aNewParallelFlow()
+                        .execute(aNewParallelFlow(executorService)
                                     .named("print 'hello' and 'world' in parallel")
                                     .execute(work2, work3)
                                     .build())
@@ -121,6 +127,7 @@ public class WorkFlowEngineImplTest {
 
         WorkFlowEngine workFlowEngine = aNewWorkFlowEngine().build();
         WorkReport workReport = workFlowEngine.run(workflow);
+        executorService.shutdown();
         assertThat(workReport.getStatus()).isEqualTo(WorkStatus.COMPLETED);
         System.out.println("workflow report = " + workReport);
     }

@@ -30,9 +30,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
 
 /**
- * A parallel flow executes a set of work units in parallel.
+ * A parallel flow executes a set of work units in parallel. A {@link ParallelFlow}
+ * requires a {@link ExecutorService} to run work units in parallel using multiple
+ * threads.
+ * 
+ * <strong>It is the responsibility of the caller to manage the lifecycle of the
+ * executor service.</strong>
  *
  * The status of a parallel flow execution is defined as:
  *
@@ -68,14 +74,27 @@ public class ParallelFlow extends AbstractWorkFlow {
 
         private String name;
         private List<Work> works;
+        private ExecutorService executorService;
 
-        private Builder() {
+        private Builder(ExecutorService executorService) {
             this.name = UUID.randomUUID().toString();
             this.works = new ArrayList<>();
+            this.executorService = executorService;
         }
 
-        public static ParallelFlow.Builder aNewParallelFlow() {
-            return new ParallelFlow.Builder();
+        /**
+         *  Create a new {@link ParallelFlow} builder. A {@link ParallelFlow}
+         *  requires a {@link ExecutorService} to run work units in parallel
+         *  using multiple threads.
+         *  
+         *  <strong>It is the responsibility of the caller to manage the lifecycle
+         *  of the executor service.</strong>
+         *  
+         * @param executorService to use to run work units in parallel
+         * @return a new {@link ParallelFlow} builder
+         */
+        public static ParallelFlow.Builder aNewParallelFlow(ExecutorService executorService) {
+            return new ParallelFlow.Builder(executorService);
         }
 
         public ParallelFlow.Builder named(String name) {
@@ -89,7 +108,7 @@ public class ParallelFlow extends AbstractWorkFlow {
         }
 
         public ParallelFlow build() {
-            return new ParallelFlow(name, works, new ParallelFlowExecutor());
+            return new ParallelFlow(name, works, new ParallelFlowExecutor(executorService));
         }
     }
 }
