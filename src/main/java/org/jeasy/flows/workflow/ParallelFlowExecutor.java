@@ -71,7 +71,7 @@ class ParallelFlowExecutor {
             try {
                 workReports.add(entry.getValue().get());
             } catch (InterruptedException | ExecutionException e) {
-                LOGGER.log(Level.WARNING, "Unable to get work report of work ''{0}''", entry.getKey().getName());
+                LOGGER.log(Level.WARNING, "Unable to get report of work unit ''{0}''", entry.getKey().getName());
             }
         }
 

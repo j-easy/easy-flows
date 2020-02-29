@@ -60,7 +60,7 @@ public class SequentialFlow extends AbstractWorkFlow {
         for (Work work : works) {
             workReport = work.call();
             if (workReport != null && FAILED.equals(workReport.getStatus())) {
-                LOGGER.log(Level.INFO, "Work ''{0}'' has failed, skipping subsequent works", work.getName());
+                LOGGER.log(Level.INFO, "Work unit ''{0}'' has failed, skipping subsequent work units", work.getName());
                 break;
             }
         }
