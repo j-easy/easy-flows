@@ -52,7 +52,7 @@ public class ParallelFlowExecutorTest {
         Assertions.assertThat(work2.isExecuted()).isTrue();
     }
 
-    class HelloWorldWork implements Work {
+    static class HelloWorldWork implements Work {
 
         private String name;
         private WorkStatus status;
