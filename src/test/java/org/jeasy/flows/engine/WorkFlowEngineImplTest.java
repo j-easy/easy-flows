@@ -59,7 +59,7 @@ public class WorkFlowEngineImplTest {
      */
 
     @Test
-    public void composeWorkFlowFromSeparateFlowsAndExecuteIt() throws Exception {
+    public void composeWorkFlowFromSeparateFlowsAndExecuteIt() {
 
         PrintMessageWork work1 = new PrintMessageWork("foo");
         PrintMessageWork work2 = new PrintMessageWork("hello");
