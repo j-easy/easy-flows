@@ -31,6 +31,7 @@ import org.jeasy.flows.workflow.*;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.jeasy.flows.engine.WorkFlowEngineBuilder.aNewWorkFlowEngine;
 import static org.jeasy.flows.work.WorkReportPredicate.COMPLETED;
 import static org.jeasy.flows.workflow.ConditionalFlow.Builder.aNewConditionalFlow;
@@ -90,6 +91,7 @@ public class WorkFlowEngineImplTest {
 
         WorkFlowEngine workFlowEngine = aNewWorkFlowEngine().build();
         WorkReport workReport = workFlowEngine.run(sequentialFlow);
+        assertThat(workReport.getStatus()).isEqualTo(WorkStatus.COMPLETED);
         System.out.println("workflow report = " + workReport);
     }
 
@@ -119,6 +121,7 @@ public class WorkFlowEngineImplTest {
 
         WorkFlowEngine workFlowEngine = aNewWorkFlowEngine().build();
         WorkReport workReport = workFlowEngine.run(workflow);
+        assertThat(workReport.getStatus()).isEqualTo(WorkStatus.COMPLETED);
         System.out.println("workflow report = " + workReport);
     }
 
