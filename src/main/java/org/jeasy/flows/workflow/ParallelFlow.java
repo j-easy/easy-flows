@@ -32,13 +32,13 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * A parallel flow executes a set of works in parallel.
+ * A parallel flow executes a set of work units in parallel.
  *
  * The status of a parallel flow execution is defined as:
  *
  * <ul>
- *     <li>{@link org.jeasy.flows.work.WorkStatus#COMPLETED}: If all works have successfully completed</li>
- *     <li>{@link org.jeasy.flows.work.WorkStatus#FAILED}: If one of the works has failed</li>
+ *     <li>{@link org.jeasy.flows.work.WorkStatus#COMPLETED}: If all work units have successfully completed</li>
+ *     <li>{@link org.jeasy.flows.work.WorkStatus#FAILED}: If one of the work units has failed</li>
  * </ul>
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)

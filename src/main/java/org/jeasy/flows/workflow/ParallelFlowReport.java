@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Aggregate report of all works reports.
+ * Aggregate report of the partial reports of work units executed in a parallel flow.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
@@ -47,6 +47,7 @@ public class ParallelFlowReport implements WorkReport {
 
     /**
      * Create a new {@link ParallelFlowReport}.
+     * 
      * @param reports of works executed in parallel
      */
     public ParallelFlowReport(List<WorkReport> reports) {
@@ -76,8 +77,8 @@ public class ParallelFlowReport implements WorkReport {
      * The status of a parallel flow is defined as follows:
      *
      * <ul>
-     *     <li>{@link org.jeasy.flows.work.WorkStatus#COMPLETED}: If all works have successfully completed</li>
-     *     <li>{@link org.jeasy.flows.work.WorkStatus#FAILED}: If one of the works has failed</li>
+     *     <li>{@link org.jeasy.flows.work.WorkStatus#COMPLETED}: If all work units have successfully completed</li>
+     *     <li>{@link org.jeasy.flows.work.WorkStatus#FAILED}: If one of the work units has failed</li>
      * </ul>
      * @return workflow status
      */

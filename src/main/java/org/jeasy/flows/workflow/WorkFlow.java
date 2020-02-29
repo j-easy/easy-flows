@@ -26,7 +26,8 @@ package org.jeasy.flows.workflow;
 import org.jeasy.flows.work.Work;
 
 /**
- * Interface to define a work flow.
+ * Interface to define a flow of work units. A workflow is also a work, this is 
+ * what makes workflows composable.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */

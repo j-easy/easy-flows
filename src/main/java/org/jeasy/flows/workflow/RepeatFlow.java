@@ -31,7 +31,7 @@ import org.jeasy.flows.work.WorkReport;
 import java.util.UUID;
 
 /**
- * A repeat flow executes a work repeatedly until its report is satisfied by a given predicate.
+ * A repeat flow executes a work repeatedly until its report satisfies a given predicate.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */

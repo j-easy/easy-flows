@@ -27,7 +27,7 @@ import org.jeasy.flows.work.WorkReport;
 import org.jeasy.flows.workflow.WorkFlow;
 
 /**
- * Interface for workflow engine.
+ * Interface for a workflow engine.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */

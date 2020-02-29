@@ -24,11 +24,19 @@
 package org.jeasy.flows.work;
 
 /**
- * Work execution status enumeration
+ * Work execution status enumeration.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com).
  */
 public enum WorkStatus {
+
+    /**
+     * The unit of work has failed.
+     */
     FAILED,
+
+    /**
+     * The unit of work has completed successfully
+     */
     COMPLETED
 }

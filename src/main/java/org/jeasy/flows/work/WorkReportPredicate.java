@@ -35,6 +35,7 @@ public interface WorkReportPredicate {
 
     /**
      * Apply the predicate on the given work report.
+     * 
      * @param workReport on which the predicate should be applied
      * @return true if the predicate applies on the given report, false otherwise
      */
