@@ -25,12 +25,12 @@ package org.jeasy.flows.work;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-@FunctionalInterface
 /**
  * A predicate interface on work report.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
+@FunctionalInterface
 public interface WorkReportPredicate {
 
     /**
