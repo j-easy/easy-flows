@@ -26,9 +26,11 @@ package org.jeasy.flows.workflow;
 import org.assertj.core.api.Assertions;
 import org.jeasy.flows.work.DefaultWorkReport;
 import org.jeasy.flows.work.Work;
+import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReport;
 import org.jeasy.flows.work.WorkStatus;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,10 +46,11 @@ public class ParallelFlowExecutorTest {
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         HelloWorldWork work1 = new HelloWorldWork("work1", WorkStatus.COMPLETED);
         HelloWorldWork work2 = new HelloWorldWork("work2", WorkStatus.FAILED);
+        WorkContext workContext = Mockito.mock(WorkContext.class);
         ParallelFlowExecutor parallelFlowExecutor = new ParallelFlowExecutor(executorService);
 
         // when
-        List<WorkReport> workReports = parallelFlowExecutor.executeInParallel(Arrays.asList(work1, work2));
+        List<WorkReport> workReports = parallelFlowExecutor.executeInParallel(Arrays.asList(work1, work2), workContext);
         executorService.shutdown();
 
         // then
@@ -73,7 +76,7 @@ public class ParallelFlowExecutorTest {
         }
 
         @Override
-        public WorkReport call() {
+        public WorkReport call(WorkContext workContext) {
             executed = true;
             return new DefaultWorkReport(status);
         }

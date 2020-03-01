@@ -25,6 +25,7 @@ package org.jeasy.flows.workflow;
 
 import org.jeasy.flows.work.NoOpWork;
 import org.jeasy.flows.work.Work;
+import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReport;
 import org.jeasy.flows.work.WorkReportPredicate;
 
@@ -60,13 +61,13 @@ public class ConditionalFlow extends AbstractWorkFlow {
     /**
      * {@inheritDoc}
      */
-    public WorkReport call() {
-        WorkReport jobReport = toExecute.call();
+    public WorkReport call(WorkContext workContext) {
+        WorkReport jobReport = toExecute.call(workContext);
         if (predicate.apply(jobReport)) {
-            jobReport = nextOnPredicateSuccess.call();
+            jobReport = nextOnPredicateSuccess.call(workContext);
         } else {
             if (nextOnPredicateFailure != null && !(nextOnPredicateFailure instanceof NoOpWork)) { // else is optional
-                jobReport = nextOnPredicateFailure.call();
+                jobReport = nextOnPredicateFailure.call(workContext);
             }
         }
         return jobReport;

@@ -38,7 +38,7 @@ public class NoOpWork implements Work {
     }
 
     @Override
-    public WorkReport call() {
+    public WorkReport call(WorkContext workContext) {
         return new DefaultWorkReport(WorkStatus.COMPLETED);
     }
 }

@@ -23,35 +23,31 @@
  */
 package org.jeasy.flows.work;
 
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
- * This interface represents a unit of work. Implementations of this interface must:
+ * Work execution context. This can be used to pass initial parameters to the
+ * workflow and share data between work units.
  * 
- * <ul>
- *     <li>catch any checked or unchecked exceptions and return a {@link WorkReport}
- *     instance with a status of {@link WorkStatus#FAILED} and a reference to the exception</li>
- *     <li>make sure the work in finished in a finite amount of time</li>
- * </ul>
- *
- * Work name must be unique within a workflow definition.
+ * <strong>Work context instances are thread-safe.</strong>
  * 
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
-public interface Work {
+public class WorkContext {
+	
+	private Map<String, Object> context = new ConcurrentHashMap<>();
 
-    /**
-     * The name of the unit of work. The name must be unique within a workflow definition.
-     * 
-     * @return name of the unit of work.
-     */
-    String getName();
+	public void put(String key, Object value) {
+		context.put(key, value);
+	}
 
-    /**
-     * Execute the unit of work and return its report. Implementations are required
-     * to catch any checked or unchecked exceptions and return a {@link WorkReport} instance
-     * with a status of {@link WorkStatus#FAILED} and a reference to the exception.
-     * 
-     * @param workContext context in which this unit of work is being executed
-     * @return the execution report
-     */
-    WorkReport call(WorkContext workContext);
+	public Object get(String key) {
+		return context.get(key);
+	}
+	
+	public Set<Map.Entry<String, Object>> getEntrySet() {
+		return context.entrySet();
+	}
 }

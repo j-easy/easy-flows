@@ -23,6 +23,7 @@
  */
 package org.jeasy.flows.engine;
 
+import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReport;
 import org.jeasy.flows.workflow.WorkFlow;
 
@@ -37,8 +38,9 @@ public interface WorkFlowEngine {
      * Run the given workflow and return its report.
      *
      * @param workFlow to run
+     * @param workContext context in which the workflow will be run
      * @return workflow report
      */
-    WorkReport run(WorkFlow workFlow);
+    WorkReport run(WorkFlow workFlow, WorkContext workContext);
 
 }

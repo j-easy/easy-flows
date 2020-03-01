@@ -24,6 +24,7 @@
 package org.jeasy.flows.workflow;
 
 import org.jeasy.flows.work.Work;
+import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReportPredicate;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -34,6 +35,7 @@ public class RepeatFlowTest {
     public void testRepeatUntil() {
         // given
         Work work = Mockito.mock(Work.class);
+        WorkContext workContext = Mockito.mock(WorkContext.class);
         WorkReportPredicate predicate = WorkReportPredicate.ALWAYS_FALSE;
         RepeatFlow repeatFlow = RepeatFlow.Builder.aNewRepeatFlow()
                 .repeat(work)
@@ -41,26 +43,27 @@ public class RepeatFlowTest {
                 .build();
 
         // when
-        repeatFlow.call();
+        repeatFlow.call(workContext);
 
         // then
-        Mockito.verify(work, Mockito.times(1)).call();
+        Mockito.verify(work, Mockito.times(1)).call(workContext);
     }
 
     @Test
     public void testRepeatTimes() {
         // given
         Work work = Mockito.mock(Work.class);
+        WorkContext workContext = Mockito.mock(WorkContext.class);
         RepeatFlow repeatFlow = RepeatFlow.Builder.aNewRepeatFlow()
                 .repeat(work)
                 .times(3)
                 .build();
 
         // when
-        repeatFlow.call();
+        repeatFlow.call(workContext);
 
         // then
-        Mockito.verify(work, Mockito.times(3)).call();
+        Mockito.verify(work, Mockito.times(3)).call(workContext);
     }
 
 }

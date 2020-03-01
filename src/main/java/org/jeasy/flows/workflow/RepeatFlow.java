@@ -25,6 +25,7 @@ package org.jeasy.flows.workflow;
 
 import org.jeasy.flows.work.NoOpWork;
 import org.jeasy.flows.work.Work;
+import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReportPredicate;
 import org.jeasy.flows.work.WorkReport;
 
@@ -49,10 +50,10 @@ public class RepeatFlow extends AbstractWorkFlow {
     /**
      * {@inheritDoc}
      */
-    public WorkReport call() {
+    public WorkReport call(WorkContext workContext) {
         WorkReport workReport;
         do {
-            workReport = work.call();
+            workReport = work.call(workContext);
         } while (predicate.apply(workReport));
         return workReport;
     }

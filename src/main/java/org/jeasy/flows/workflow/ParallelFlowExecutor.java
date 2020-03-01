@@ -24,6 +24,7 @@
 package org.jeasy.flows.workflow;
 
 import org.jeasy.flows.work.Work;
+import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReport;
 
 import java.util.ArrayList;
@@ -46,11 +47,11 @@ class ParallelFlowExecutor {
         this.workExecutor = workExecutor;
     }
 
-    List<WorkReport> executeInParallel(List<Work> works) {
+    List<WorkReport> executeInParallel(List<Work> works, WorkContext workContext) {
         // submit work units to be executed in parallel
         Map<Work, Future<WorkReport>> reportFutures = new HashMap<>();
         for (Work work : works) {
-            Future<WorkReport> reportFuture = workExecutor.submit(work);
+            Future<WorkReport> reportFuture = workExecutor.submit(() -> work.call(workContext));
             reportFutures.put(work, reportFuture);
         }
 
