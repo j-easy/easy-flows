@@ -23,11 +23,13 @@
  */
 package org.jeasy.flows.workflow;
 
+import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReport;
 import org.jeasy.flows.work.WorkStatus;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Aggregate report of the partial reports of work units executed in a parallel flow.
@@ -82,6 +84,7 @@ public class ParallelFlowReport implements WorkReport {
      * </ul>
      * @return workflow status
      */
+    @Override
     public WorkStatus getStatus() {
         for (WorkReport report : reports) {
             if (report.getStatus().equals(WorkStatus.FAILED)) {
@@ -105,5 +108,24 @@ public class ParallelFlowReport implements WorkReport {
             }
         }
         return null;
+    }
+
+    /**
+     * The parallel flow context is the union of all partial contexts. In a parallel
+     * flow, each work unit should have its own unique keys to avoid key overriding
+     * when merging partial contexts.
+     * 
+     * @return the union of all partial contexts
+     */
+    @Override
+    public WorkContext getWorkContext() {
+        WorkContext workContext = new WorkContext();
+        for (WorkReport report : reports) {
+            WorkContext partialContext = report.getWorkContext();
+            for (Map.Entry<String, Object> entry : partialContext.getEntrySet()) {
+                workContext.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return workContext;
     }
 }

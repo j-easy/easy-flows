@@ -78,7 +78,7 @@ public class ParallelFlowExecutorTest {
         @Override
         public WorkReport call(WorkContext workContext) {
             executed = true;
-            return new DefaultWorkReport(status);
+            return new DefaultWorkReport(status, workContext);
         }
 
         public boolean isExecuted() {

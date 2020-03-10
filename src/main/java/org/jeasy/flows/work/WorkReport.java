@@ -46,4 +46,10 @@ public interface WorkReport {
      */
     Throwable getError();
 
+    /**
+     * Get the last work context of the flow
+     * @return last work context of the flow
+     */
+    WorkContext getWorkContext();
+
 }

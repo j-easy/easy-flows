@@ -176,7 +176,7 @@ public class WorkFlowEngineImplTest {
 
         public WorkReport call(WorkContext workContext) {
             System.out.println(message);
-            return new DefaultWorkReport(WorkStatus.COMPLETED);
+            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         }
 
     }
@@ -198,7 +198,7 @@ public class WorkFlowEngineImplTest {
         public WorkReport call(WorkContext workContext) {
             String input = (String) workContext.get("partition" + partition);
             workContext.put("wordCountInPartition" + partition, input.split(" ").length);
-            return new DefaultWorkReport(WorkStatus.COMPLETED);
+            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         }
     }
     
@@ -219,7 +219,7 @@ public class WorkFlowEngineImplTest {
                 }
             }
             workContext.put("totalCount", sum);
-            return new DefaultWorkReport(WorkStatus.COMPLETED);
+            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         }
     }
 
@@ -234,7 +234,7 @@ public class WorkFlowEngineImplTest {
         public WorkReport call(WorkContext workContext) {
             int totalCount = (int) workContext.get("totalCount");
             System.out.println(totalCount);
-            return new DefaultWorkReport(WorkStatus.COMPLETED);
+            return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         }
     }
 }

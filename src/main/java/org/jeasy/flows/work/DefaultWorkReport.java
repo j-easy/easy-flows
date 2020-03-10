@@ -31,6 +31,7 @@ package org.jeasy.flows.work;
 public class DefaultWorkReport implements WorkReport {
 
     private WorkStatus status;
+    private WorkContext workContext;
     private Throwable error;
 
     /**
@@ -38,8 +39,9 @@ public class DefaultWorkReport implements WorkReport {
      *
      * @param status of work
      */
-    public DefaultWorkReport(WorkStatus status) {
+    public DefaultWorkReport(WorkStatus status, WorkContext workContext) {
         this.status = status;
+        this.workContext = workContext;
     }
 
     /**
@@ -48,8 +50,8 @@ public class DefaultWorkReport implements WorkReport {
      * @param status of work
      * @param error if any
      */
-    public DefaultWorkReport(WorkStatus status, Throwable error) {
-        this(status);
+    public DefaultWorkReport(WorkStatus status, WorkContext workContext, Throwable error) {
+        this(status, workContext);
         this.error = error;
     }
 
@@ -62,9 +64,15 @@ public class DefaultWorkReport implements WorkReport {
     }
 
     @Override
+    public WorkContext getWorkContext() {
+        return workContext;
+    }
+
+    @Override
     public String toString() {
         return "DefaultWorkReport {" +
                 "status=" + status +
+                "context=" + workContext +
                 ", error=" + (error == null ? "''" : error) +
                 '}';
     }
