@@ -10,7 +10,7 @@
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT)
 [![Build Status](https://github.com/j-easy/easy-flows/workflows/Java%20CI/badge.svg)](https://github.com/j-easy/easy-flows/actions)
 [![Coverage](https://coveralls.io/repos/j-easy/easy-flows/badge.svg?style=flat&branch=master&service=github)](https://coveralls.io/github/j-easy/easy-flows?branch=master)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.jeasy/easy-flows/badge.svg?style=flat)](http://search.maven.org/#artifactdetails|org.jeasy|easy-flows|0.1|)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.jeasy/easy-flows/badge.svg?style=flat)](http://search.maven.org/#artifactdetails|org.jeasy|easy-flows|0.2|)
 [![Javadoc](https://www.javadoc.io/badge/org.jeasy/easy-flows.svg)](http://www.javadoc.io/doc/org.jeasy/easy-flows)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/j-easy/easy-flows)
 
@@ -20,7 +20,8 @@
 
 ## Latest news
 
-* 30/06/2017: The first version of Easy Flows has been released! Go get it and write some flows! See release notes [here](https://github.com/j-easy/easy-flows/releases).
+* 12/03/2020: Easy Flows 0.2 has been released with the introduction of a new concept called `WorkContext` that makes it possible to share data between work units. 
+See release notes [here](https://github.com/j-easy/easy-flows/releases).
 
 ## What is Easy Flows?
 
@@ -53,9 +54,9 @@ class PrintMessageWork implements Work {
         return "print message work";
     }
 
-    public WorkReport call() {
+    public WorkReport call(WorkContext workContext) {
         System.out.println(message);
-        return new DefaultWorkReport(WorkStatus.COMPLETED);
+        return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
     }
 }
 ```
@@ -86,6 +87,7 @@ PrintMessageWork work3 = new PrintMessageWork("world");
 PrintMessageWork work4 = new PrintMessageWork("ok");
 PrintMessageWork work5 = new PrintMessageWork("nok");
 
+ExecutorService executorService = Executors.newFixedThreadPool(2);
 WorkFlow workflow = aNewSequentialFlow() // flow 4
         .execute(aNewRepeatFlow() // flow 1
                     .named("print foo 3 times")
@@ -93,7 +95,7 @@ WorkFlow workflow = aNewSequentialFlow() // flow 4
                     .times(3)
                     .build())
         .then(aNewConditionalFlow() // flow 3
-                .execute(aNewParallelFlow() // flow 2
+                .execute(aNewParallelFlow(executorService) // flow 2
                             .named("print 'hello' and 'world' in parallel")
                             .execute(work2, work3)
                             .build())
@@ -104,7 +106,9 @@ WorkFlow workflow = aNewSequentialFlow() // flow 4
         .build();
 
 WorkFlowEngine workFlowEngine = aNewWorkFlowEngine().build();
-WorkReport workReport = workFlowEngine.run(workflow);
+WorkContext workContext = new WorkContext();
+WorkReport workReport = workFlowEngine.run(workflow, workContext);
+executorService.shutdown();
 ```
 
 This is not a very useful workflow, but just to give you an idea about how to write workflows with Easy Flows.
