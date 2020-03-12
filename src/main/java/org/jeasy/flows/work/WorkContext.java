@@ -50,4 +50,9 @@ public class WorkContext {
 	public Set<Map.Entry<String, Object>> getEntrySet() {
 		return context.entrySet();
 	}
+
+	@Override
+	public String toString() {
+		return "context=" + context + '}';
+	}
 }
