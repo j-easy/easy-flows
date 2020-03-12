@@ -72,7 +72,7 @@ public class DefaultWorkReport implements WorkReport {
     public String toString() {
         return "DefaultWorkReport {" +
                 "status=" + status +
-                "context=" + workContext +
+                ", context=" + workContext +
                 ", error=" + (error == null ? "''" : error) +
                 '}';
     }
