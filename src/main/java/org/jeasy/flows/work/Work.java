@@ -23,6 +23,8 @@
  */
 package org.jeasy.flows.work;
 
+import java.util.UUID;
+
 /**
  * This interface represents a unit of work. Implementations of this interface must:
  * 
@@ -43,7 +45,9 @@ public interface Work {
      * 
      * @return name of the unit of work.
      */
-    String getName();
+    default String getName() {
+        return UUID.randomUUID().toString();
+    }
 
     /**
      * Execute the unit of work and return its report. Implementations are required
