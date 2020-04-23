@@ -26,16 +26,16 @@ package org.jeasy.flows.engine;
 import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReport;
 import org.jeasy.flows.workflow.WorkFlow;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 class WorkFlowEngineImpl implements WorkFlowEngine {
 
-    private static final Logger LOGGER = Logger.getLogger(WorkFlowEngineImpl.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(WorkFlowEngineImpl.class);
 
     public WorkReport run(WorkFlow workFlow, WorkContext workContext) {
-        LOGGER.log(Level.INFO, "Running workflow ''{0}''", workFlow.getName());
+        LOGGER.info("Running workflow ''{}''", workFlow.getName());
         return workFlow.call(workContext);
     }
 

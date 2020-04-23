@@ -34,12 +34,12 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class ParallelFlowExecutor {
 
-    private static final Logger LOGGER = Logger.getLogger(ParallelFlowExecutor.class.getName());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ParallelFlowExecutor.class);
 
     private ExecutorService workExecutor;
 
@@ -72,7 +72,7 @@ class ParallelFlowExecutor {
             try {
                 workReports.add(entry.getValue().get());
             } catch (InterruptedException | ExecutionException e) {
-                LOGGER.log(Level.WARNING, "Unable to get report of work unit ''{0}''", entry.getKey().getName());
+                LOGGER.warn("Unable to get report of work unit ''{}''", entry.getKey().getName());
             }
         }
 
