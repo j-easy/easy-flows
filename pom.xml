@@ -22,8 +22,6 @@
         <junit.version>4.13</junit.version>
         <assertj.version>3.15.0</assertj.version>
         <mockito.version>3.3.0</mockito.version>
-        <maven-cobertura-plugin.version>2.7</maven-cobertura-plugin.version>
-        <maven-coveralls-plugin.version>4.3.0</maven-coveralls-plugin.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -106,11 +104,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.eluder.coveralls</groupId>
-                <artifactId>coveralls-maven-plugin</artifactId>
-                <version>${maven-coveralls-plugin.version}</version>
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
@@ -136,15 +129,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <version>${maven-cobertura-plugin.version}</version>
-                <configuration>
-                    <format>xml</format>
-                    <maxmem>256m</maxmem>
-                </configuration>
             </plugin>
         </plugins>
     </build>
