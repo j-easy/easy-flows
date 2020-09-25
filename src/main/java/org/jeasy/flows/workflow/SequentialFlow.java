@@ -38,7 +38,7 @@ import static org.jeasy.flows.work.WorkStatus.FAILED;
 /**
  * A sequential flow executes a set of work units in sequence.
  *
- * If a init of work fails, next work units in the pipeline will be skipped.
+ * If a unit of work fails, next work units in the pipeline will be skipped.
  *
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
