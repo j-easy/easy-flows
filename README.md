@@ -132,6 +132,13 @@ If you found a bug or want to request a feature, please use the [issue tracker](
 
 For any further question, you can use the [Gitter](https://gitter.im/j-easy/easy-flows) channel of the project.
 
+## Awesome contributors
+
+* [jaredculp](https://github.com/jaredculp)
+* [zhhaojie](https://github.com/zhhaojie)
+
+Thank you for your contributions!
+
 ## License
 
 Easy Flows is released under the terms of the MIT license:
