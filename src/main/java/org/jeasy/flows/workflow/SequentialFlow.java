@@ -70,35 +70,58 @@ public class SequentialFlow extends AbstractWorkFlow {
 
     public static class Builder {
 
-        private String name;
-        private List<Work> works;
-
         private Builder() {
-            this.name = UUID.randomUUID().toString();
-            this.works = new ArrayList<>();
+            // force usage of static method aNewSequentialFlow
         }
 
-        public static SequentialFlow.Builder aNewSequentialFlow() {
-            return new SequentialFlow.Builder();
+        public static NameStep aNewSequentialFlow() {
+            return new BuildSteps();
         }
 
-        public SequentialFlow.Builder named(String name) {
-            this.name = name;
-            return this;
+        public interface NameStep extends ExecuteStep {
+            ExecuteStep named(String name);
         }
 
-        public SequentialFlow.Builder execute(Work work) {
-            this.works.add(work);
-            return this;
+        public interface ExecuteStep {
+            ThenStep execute(Work initialWork);
         }
 
-        public SequentialFlow.Builder then(Work work) {
-            this.works.add(work);
-            return this;
+        public interface ThenStep {
+            ThenStep then(Work nextWork);
+            SequentialFlow build();
         }
 
-        public SequentialFlow build() {
-            return new SequentialFlow(name, works);
+        private static class BuildSteps implements NameStep, ExecuteStep, ThenStep {
+
+            private String name;
+            private List<Work> works;
+            
+            BuildSteps() {
+                this.name = UUID.randomUUID().toString();
+                this.works = new ArrayList<>();
+            }
+            
+            public ExecuteStep named(String name) {
+                this.name = name;
+                return this;
+            }
+
+            @Override
+            public ThenStep execute(Work initialWork) {
+                this.works.add(initialWork);
+                return this;
+            }
+
+            @Override
+            public ThenStep then(Work nextWork) {
+                this.works.add(nextWork);
+                return this;
+            }
+
+            @Override
+            public SequentialFlow build() {
+                return new SequentialFlow(this.name, this.works);
+            }
         }
     }
 }

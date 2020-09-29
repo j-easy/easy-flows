@@ -81,9 +81,10 @@ public class WorkFlowEngineImplTest {
                 .build();
 
         ExecutorService executorService = Executors.newFixedThreadPool(2);
-        ParallelFlow parallelFlow = aNewParallelFlow(executorService)
+        ParallelFlow parallelFlow = aNewParallelFlow()
                 .named("print 'hello' and 'world' in parallel")
                 .execute(work2, work3)
+                .with(executorService)
                 .build();
 
         ConditionalFlow conditionalFlow = aNewConditionalFlow()
@@ -121,9 +122,10 @@ public class WorkFlowEngineImplTest {
                             .times(3)
                             .build())
                 .then(aNewConditionalFlow()
-                        .execute(aNewParallelFlow(executorService)
+                        .execute(aNewParallelFlow()
                                     .named("print 'hello' and 'world' in parallel")
                                     .execute(work2, work3)
+                                    .with(executorService)
                                     .build())
                         .when(COMPLETED)
                         .then(work4)
@@ -146,8 +148,9 @@ public class WorkFlowEngineImplTest {
         PrintWordCount work4 = new PrintWordCount();
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         WorkFlow workflow = aNewSequentialFlow()
-                .execute(aNewParallelFlow(executorService)
+                .execute(aNewParallelFlow()
                             .execute(work1, work2)
+                            .with(executorService)
                             .build())
                 .then(work3)
                 .then(work4)

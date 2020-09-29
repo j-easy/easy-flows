@@ -75,49 +75,88 @@ public class ConditionalFlow extends AbstractWorkFlow {
 
     public static class Builder {
 
-        private String name;
-        private Work toExecute, nextOnPredicateSuccess, nextOnPredicateFailure;
-        private WorkReportPredicate predicate;
-
         private Builder() {
-            this.name = UUID.randomUUID().toString();
-            this.toExecute = new NoOpWork();
-            this.nextOnPredicateSuccess = new NoOpWork();
-            this.nextOnPredicateFailure = new NoOpWork();
-            this.predicate = WorkReportPredicate.ALWAYS_FALSE;
+            // force usage of static method aNewConditionalFlow
         }
 
-        public static ConditionalFlow.Builder aNewConditionalFlow() {
-            return new ConditionalFlow.Builder();
+        public static NameStep aNewConditionalFlow() {
+            return new BuildSteps();
         }
 
-        public ConditionalFlow.Builder named(String name) {
-            this.name = name;
-            return this;
+        public interface NameStep extends ExecuteStep {
+            ExecuteStep named(String name);
         }
 
-        public ConditionalFlow.Builder execute(Work work) {
-            this.toExecute = work;
-            return this;
+        public interface ExecuteStep {
+            WhenStep execute(Work work);
         }
 
-        public ConditionalFlow.Builder when(WorkReportPredicate predicate) {
-            this.predicate = predicate;
-            return this;
+        public interface WhenStep {
+            ThenStep when(WorkReportPredicate predicate);
         }
 
-        public ConditionalFlow.Builder then(Work work) {
-            this.nextOnPredicateSuccess = work;
-            return this;
+        public interface ThenStep {
+            OtherwiseStep then(Work work);
         }
 
-        public ConditionalFlow.Builder otherwise(Work work) {
-            this.nextOnPredicateFailure = work;
-            return this;
+        public interface OtherwiseStep extends BuildStep {
+            BuildStep otherwise(Work work);
         }
 
-        public ConditionalFlow build() {
-            return new ConditionalFlow(name, toExecute, nextOnPredicateSuccess, nextOnPredicateFailure, predicate);
+        public interface BuildStep {
+            ConditionalFlow build();
+        }
+
+        private static class BuildSteps implements NameStep, ExecuteStep, WhenStep, ThenStep, OtherwiseStep, BuildStep {
+
+            private String name;
+            private Work toExecute, nextOnPredicateSuccess, nextOnPredicateFailure;
+            private WorkReportPredicate predicate;
+
+            BuildSteps() {
+                this.name = UUID.randomUUID().toString();
+                this.toExecute = new NoOpWork();
+                this.nextOnPredicateSuccess = new NoOpWork();
+                this.nextOnPredicateFailure = new NoOpWork();
+                this.predicate = WorkReportPredicate.ALWAYS_FALSE;
+            }
+
+            @Override
+            public ExecuteStep named(String name) {
+                this.name = name;
+                return this;
+            }
+
+            @Override
+            public WhenStep execute(Work work) {
+                this.toExecute = work;
+                return this;
+            }
+
+            @Override
+            public ThenStep when(WorkReportPredicate predicate) {
+                this.predicate = predicate;
+                return this;
+            }
+
+            @Override
+            public OtherwiseStep then(Work work) {
+                this.nextOnPredicateSuccess = work;
+                return this;
+            }
+
+            @Override
+            public BuildStep otherwise(Work work) {
+                this.nextOnPredicateFailure = work;
+                return this;
+            }
+
+            @Override
+            public ConditionalFlow build() {
+                return new ConditionalFlow(this.name, this.toExecute,
+                        this.nextOnPredicateSuccess, this.nextOnPredicateFailure,
+                        this.predicate);
+            }
         }
     }
 }
