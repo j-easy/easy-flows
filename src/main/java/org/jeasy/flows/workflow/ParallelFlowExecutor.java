@@ -31,15 +31,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 class ParallelFlowExecutor {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ParallelFlowExecutor.class);
 
     private ExecutorService workExecutor;
 
@@ -48,31 +45,33 @@ class ParallelFlowExecutor {
     }
 
     List<WorkReport> executeInParallel(List<Work> works, WorkContext workContext) {
-        // submit work units to be executed in parallel
-        Map<Work, Future<WorkReport>> reportFutures = new HashMap<>();
-        for (Work work : works) {
-            Future<WorkReport> reportFuture = workExecutor.submit(() -> work.call(workContext));
-            reportFutures.put(work, reportFuture);
-        }
+        // prepare tasks for parallel submission
+        List<Callable<WorkReport>> tasks = new ArrayList<>(works.size());
+        works.forEach(work -> tasks.add(() -> work.call(workContext)));
 
-        // poll for work completion
-        int finishedWorks = works.size();
-        // FIXME polling futures for completion, not sure this is the best way to run callables in parallel and wait for them to complete (use CompletionService??)
-        while (finishedWorks > 0) {
-            for (Future<WorkReport> future : reportFutures.values()) {
-                if (future != null && future.isDone()) {
-                        finishedWorks--;
-                }
-            }
+        // submit work units and wait for results
+        List<Future<WorkReport>> futures;
+        try {
+            futures = this.workExecutor.invokeAll(tasks);
+        } catch (InterruptedException e) {
+            throw new RuntimeException("The parallel flow was interrupted while executing work units", e);
+        }
+        Map<Work, Future<WorkReport>> workToReportFuturesMap = new HashMap<>();
+        for (int index = 0; index < works.size(); index++) {
+            workToReportFuturesMap.put(works.get(index), futures.get(index));
         }
 
         // gather reports
         List<WorkReport> workReports = new ArrayList<>();
-        for (Map.Entry<Work, Future<WorkReport>> entry : reportFutures.entrySet()) {
+        for (Map.Entry<Work, Future<WorkReport>> entry : workToReportFuturesMap.entrySet()) {
             try {
                 workReports.add(entry.getValue().get());
-            } catch (InterruptedException | ExecutionException e) {
-                LOGGER.warn("Unable to get report of work unit ''{}''", entry.getKey().getName());
+            } catch (InterruptedException e) {
+                String message = String.format("The parallel flow was interrupted while waiting for the result of work unit '%s'", entry.getKey().getName());
+                throw new RuntimeException(message, e);
+            } catch (ExecutionException e) {
+                String message = String.format("Unable to execute work unit '%s'", entry.getKey().getName());
+                throw new RuntimeException(message, e);
             }
         }
 
