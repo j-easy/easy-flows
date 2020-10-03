@@ -94,9 +94,10 @@ WorkFlow workflow = aNewSequentialFlow() // flow 4
                     .times(3)
                     .build())
         .then(aNewConditionalFlow() // flow 3
-                .execute(aNewParallelFlow(executorService) // flow 2
+                .execute(aNewParallelFlow() // flow 2
                             .named("print 'hello' and 'world' in parallel")
                             .execute(work2, work3)
+                            .with(executorService)
                             .build())
                 .when(WorkReportPredicate.COMPLETED)
                 .then(work4)
