@@ -23,6 +23,8 @@
  */
 package org.jeasy.flows.engine;
 
+import java.util.concurrent.Future;
+
 import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReport;
 import org.jeasy.flows.workflow.WorkFlow;
@@ -42,5 +44,7 @@ public interface WorkFlowEngine {
      * @return workflow report
      */
     WorkReport run(WorkFlow workFlow, WorkContext workContext);
+
+    Future<WorkReport> submit(WorkFlow workFlow, WorkContext workContext);
 
 }

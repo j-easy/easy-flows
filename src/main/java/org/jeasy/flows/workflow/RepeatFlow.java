@@ -23,11 +23,15 @@
  */
 package org.jeasy.flows.workflow;
 
+import org.jeasy.flows.work.DefaultWorkReport;
 import org.jeasy.flows.work.NoOpWork;
 import org.jeasy.flows.work.Work;
 import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReportPredicate;
 import org.jeasy.flows.work.WorkReport;
+import org.jeasy.flows.work.WorkStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.UUID;
 
@@ -37,6 +41,8 @@ import java.util.UUID;
  * @author Mahmoud Ben Hassine (mahmoud.benhassine@icloud.com)
  */
 public class RepeatFlow extends AbstractWorkFlow {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RepeatFlow.class);
 
     private Work work;
     private WorkReportPredicate predicate;
@@ -54,6 +60,10 @@ public class RepeatFlow extends AbstractWorkFlow {
         WorkReport workReport;
         do {
             workReport = work.call(workContext);
+            if (Thread.currentThread().isInterrupted()) {
+                LOGGER.info("Workflow ''{}'' has been interrupted, skipping subsequent work units", this.getName());
+                return new DefaultWorkReport(WorkStatus.STOPPED, workContext);
+            }
         } while (predicate.apply(workReport));
         return workReport;
     }

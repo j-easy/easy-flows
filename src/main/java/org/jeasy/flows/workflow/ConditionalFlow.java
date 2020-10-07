@@ -63,6 +63,7 @@ public class ConditionalFlow extends AbstractWorkFlow {
      */
     public WorkReport call(WorkContext workContext) {
         WorkReport jobReport = toExecute.call(workContext);
+        // TODO how/when to interrupt a conditional flow?
         if (predicate.apply(jobReport)) {
             jobReport = nextOnPredicateSuccess.call(workContext);
         } else {

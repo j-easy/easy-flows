@@ -23,6 +23,10 @@
  */
 package org.jeasy.flows.engine;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReport;
 import org.jeasy.flows.workflow.WorkFlow;
@@ -34,9 +38,24 @@ class WorkFlowEngineImpl implements WorkFlowEngine {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WorkFlowEngineImpl.class);
 
+    private ExecutorService executorService;
+
+    public WorkFlowEngineImpl() {
+        this(Executors.newSingleThreadExecutor());
+    }
+
+    public WorkFlowEngineImpl(ExecutorService executorService) {
+        this.executorService = executorService;
+    }
+
     public WorkReport run(WorkFlow workFlow, WorkContext workContext) {
         LOGGER.info("Running workflow ''{}''", workFlow.getName());
         return workFlow.call(workContext);
+    }
+
+    @Override
+    public Future<WorkReport> submit(WorkFlow workFlow, WorkContext workContext) {
+        return this.executorService.submit(() -> workFlow.call(workContext));
     }
 
 }

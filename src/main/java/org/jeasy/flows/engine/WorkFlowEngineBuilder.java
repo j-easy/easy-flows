@@ -23,7 +23,8 @@
  */
 package org.jeasy.flows.engine;
 
-import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Main entry point to create {@link WorkFlowEngine} instances.
@@ -32,6 +33,8 @@ import java.io.IOException;
  */
 public class WorkFlowEngineBuilder {
 
+    private ExecutorService executorService = Executors.newSingleThreadExecutor();
+    
     /**
      * Create a new {@link WorkFlowEngineBuilder}.
      * 
@@ -44,12 +47,17 @@ public class WorkFlowEngineBuilder {
     private WorkFlowEngineBuilder() {
     }
 
+    public WorkFlowEngineBuilder executorService(ExecutorService executorService) {
+        this.executorService = executorService;
+        return this;
+    }
+
     /**
      * Create a new {@link WorkFlowEngine}.
      * 
      * @return a new {@link WorkFlowEngine}.
      */
     public WorkFlowEngine build() {
-        return new WorkFlowEngineImpl();
+        return new WorkFlowEngineImpl(this.executorService);
     }
 }

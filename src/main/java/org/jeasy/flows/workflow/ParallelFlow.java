@@ -65,6 +65,7 @@ public class ParallelFlow extends AbstractWorkFlow {
      * {@inheritDoc}
      */
     public ParallelFlowReport call(WorkContext workContext) {
+        // TODO how/when to interrupt a parallel flow?
         ParallelFlowReport workFlowReport = new ParallelFlowReport();
         List<WorkReport> workReports = workExecutor.executeInParallel(works, workContext);
         workFlowReport.addAll(workReports);

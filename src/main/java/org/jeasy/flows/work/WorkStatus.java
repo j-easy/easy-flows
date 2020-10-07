@@ -38,5 +38,7 @@ public enum WorkStatus {
     /**
      * The unit of work has completed successfully
      */
-    COMPLETED
+    COMPLETED,
+    
+    STOPPED
 }
