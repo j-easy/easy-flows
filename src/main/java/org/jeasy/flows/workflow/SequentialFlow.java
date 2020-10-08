@@ -84,10 +84,12 @@ public class SequentialFlow extends AbstractWorkFlow {
 
         public interface ExecuteStep {
             ThenStep execute(Work initialWork);
+            ThenStep execute(List<Work> initialWorkUnits);
         }
 
         public interface ThenStep {
             ThenStep then(Work nextWork);
+            ThenStep then(List<Work> nextWorkUnits);
             SequentialFlow build();
         }
 
@@ -113,8 +115,20 @@ public class SequentialFlow extends AbstractWorkFlow {
             }
 
             @Override
+            public ThenStep execute(List<Work> initialWorkUnits) {
+                this.works.addAll(initialWorkUnits);
+                return this;
+            }
+
+            @Override
             public ThenStep then(Work nextWork) {
                 this.works.add(nextWork);
+                return this;
+            }
+
+            @Override
+            public ThenStep then(List<Work> nextWorkUnits) {
+                this.works.addAll(nextWorkUnits);
                 return this;
             }
 
