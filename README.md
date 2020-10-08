@@ -9,9 +9,8 @@
 
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](http://opensource.org/licenses/MIT)
 [![Build Status](https://github.com/j-easy/easy-flows/workflows/Java%20CI/badge.svg)](https://github.com/j-easy/easy-flows/actions)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.jeasy/easy-flows/badge.svg?style=flat)](http://search.maven.org/#artifactdetails|org.jeasy|easy-flows|0.2|)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.jeasy/easy-flows/badge.svg?style=flat)](http://search.maven.org/#artifactdetails|org.jeasy|easy-flows|0.3|)
 [![Javadoc](https://www.javadoc.io/badge/org.jeasy/easy-flows.svg)](http://www.javadoc.io/doc/org.jeasy/easy-flows)
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/j-easy/easy-flows)
 
 </div>
 
@@ -19,8 +18,7 @@
 
 ## Latest news
 
-* 12/03/2020: Easy Flows 0.2 has been released with the introduction of a new concept called `WorkContext` that makes it possible to share data between work units. 
-See release notes [here](https://github.com/j-easy/easy-flows/releases).
+* 08/10/2020: Easy Flows 0.3 has been released with a number of new features and improvements. You can find all details in the release notes [here](https://github.com/j-easy/easy-flows/releases).
 
 ## What is Easy Flows?
 
@@ -53,7 +51,7 @@ class PrintMessageWork implements Work {
         return "print message work";
     }
 
-    public WorkReport call(WorkContext workContext) {
+    public WorkReport execute(WorkContext workContext) {
         System.out.println(message);
         return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
     }
@@ -116,22 +114,21 @@ You can find more details about all of this in the [wiki](https://github.com/j-e
 
 ## Why Easy Flows?
 
-Easy Flows was created because of the lack of a simple open source workflow engine that can orchestrate `Callable` Java objects.
+Easy Flows was created due to the lack of a simple open source workflow engine that can orchestrate `Callable/Runnable` Java objects.
 Why every single workflow engine out there is trying to implement BPMN? There is nothing wrong with BPMN, but it is not easy
 ( [538 pages specification??](http://www.omg.org/spec/BPMN/2.0/PDF) ). Same thing for [BPEL](http://docs.oasis-open.org/wsbpel/2.0/OS/wsbpel-v2.0-OS.pdf)..
 
 There are currently good workflow engines, but since they try to implement BPMN, they are not easy to use and are often misused.
 Most of BPMN concepts are not essential to many applications, and building such applications on top of a heavy engine is not efficient.
 
-Easy Flows tries to provide a simple alternative with natural APIs that are easy to think about along with basic flows that most small/medium sized applications would require. If your business process requires a A0 paper to be drawn down, Easy Flows is probably not the right choice for you.
+Easy Flows tries to provide a simple alternative with natural APIs that are easy to think about along with basic flows that most small/medium sized
+ applications would require. If your business process requires a A0 paper to be drawn down, Easy Flows is probably not the right choice for you.
 
 ## Contribution
 
 You are welcome to contribute to the project with pull requests on GitHub.
 
 If you found a bug or want to request a feature, please use the [issue tracker](https://github.com/j-easy/easy-flows/issues).
-
-For any further question, you can use the [Gitter](https://gitter.im/j-easy/easy-flows) channel of the project.
 
 ## Awesome contributors
 
