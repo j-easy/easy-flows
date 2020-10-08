@@ -44,10 +44,10 @@ class ParallelFlowExecutor {
         this.workExecutor = workExecutor;
     }
 
-    List<WorkReport> executeInParallel(List<Work> works, WorkContext workContext) {
+    List<WorkReport> executeInParallel(List<Work> workUnits, WorkContext workContext) {
         // prepare tasks for parallel submission
-        List<Callable<WorkReport>> tasks = new ArrayList<>(works.size());
-        works.forEach(work -> tasks.add(() -> work.call(workContext)));
+        List<Callable<WorkReport>> tasks = new ArrayList<>(workUnits.size());
+        workUnits.forEach(work -> tasks.add(() -> work.call(workContext)));
 
         // submit work units and wait for results
         List<Future<WorkReport>> futures;
@@ -57,8 +57,8 @@ class ParallelFlowExecutor {
             throw new RuntimeException("The parallel flow was interrupted while executing work units", e);
         }
         Map<Work, Future<WorkReport>> workToReportFuturesMap = new HashMap<>();
-        for (int index = 0; index < works.size(); index++) {
-            workToReportFuturesMap.put(works.get(index), futures.get(index));
+        for (int index = 0; index < workUnits.size(); index++) {
+            workToReportFuturesMap.put(workUnits.get(index), futures.get(index));
         }
 
         // gather reports

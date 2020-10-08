@@ -52,12 +52,12 @@ import java.util.concurrent.ExecutorService;
  */
 public class ParallelFlow extends AbstractWorkFlow {
 
-    private List<Work> works = new ArrayList<>();
+    private List<Work> workUnits = new ArrayList<>();
     private ParallelFlowExecutor workExecutor;
 
-    ParallelFlow(String name, List<Work> works, ParallelFlowExecutor parallelFlowExecutor) {
+    ParallelFlow(String name, List<Work> workUnits, ParallelFlowExecutor parallelFlowExecutor) {
         super(name);
-        this.works.addAll(works);
+        this.workUnits.addAll(workUnits);
         this.workExecutor = parallelFlowExecutor;
     }
 
@@ -66,7 +66,7 @@ public class ParallelFlow extends AbstractWorkFlow {
      */
     public ParallelFlowReport call(WorkContext workContext) {
         ParallelFlowReport workFlowReport = new ParallelFlowReport();
-        List<WorkReport> workReports = workExecutor.executeInParallel(works, workContext);
+        List<WorkReport> workReports = workExecutor.executeInParallel(workUnits, workContext);
         workFlowReport.addAll(workReports);
         return workFlowReport;
     }
@@ -86,7 +86,7 @@ public class ParallelFlow extends AbstractWorkFlow {
         }
 
         public interface ExecuteStep {
-            WithStep execute(Work... works);
+            WithStep execute(Work... workUnits);
         }
 
         public interface WithStep {
@@ -125,8 +125,8 @@ public class ParallelFlow extends AbstractWorkFlow {
             }
 
             @Override
-            public WithStep execute(Work... works) {
-                this.works.addAll(Arrays.asList(works));
+            public WithStep execute(Work... workUnits) {
+                this.works.addAll(Arrays.asList(workUnits));
                 return this;
             }
             

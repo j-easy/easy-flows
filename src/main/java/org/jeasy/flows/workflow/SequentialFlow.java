@@ -46,11 +46,11 @@ public class SequentialFlow extends AbstractWorkFlow {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SequentialFlow.class.getName());
 
-    private List<Work> works = new ArrayList<>();
+    private List<Work> workUnits = new ArrayList<>();
 
-    SequentialFlow(String name, List<Work> works) {
+    SequentialFlow(String name, List<Work> workUnits) {
         super(name);
-        this.works.addAll(works);
+        this.workUnits.addAll(workUnits);
     }
 
     /**
@@ -58,7 +58,7 @@ public class SequentialFlow extends AbstractWorkFlow {
      */
     public WorkReport call(WorkContext workContext) {
         WorkReport workReport = null;
-        for (Work work : works) {
+        for (Work work : workUnits) {
             workReport = work.call(workContext);
             if (workReport != null && FAILED.equals(workReport.getStatus())) {
                 LOGGER.info("Work unit ''{}'' has failed, skipping subsequent work units", work.getName());

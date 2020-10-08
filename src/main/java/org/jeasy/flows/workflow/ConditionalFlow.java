@@ -47,12 +47,12 @@ import java.util.UUID;
  */
 public class ConditionalFlow extends AbstractWorkFlow {
 
-    private Work toExecute, nextOnPredicateSuccess, nextOnPredicateFailure;
+    private Work initialWorkUnit, nextOnPredicateSuccess, nextOnPredicateFailure;
     private WorkReportPredicate predicate;
 
-    ConditionalFlow(String name, Work toExecute, Work nextOnPredicateSuccess, Work nextOnPredicateFailure, WorkReportPredicate predicate) {
+    ConditionalFlow(String name, Work initialWorkUnit, Work nextOnPredicateSuccess, Work nextOnPredicateFailure, WorkReportPredicate predicate) {
         super(name);
-        this.toExecute = toExecute;
+        this.initialWorkUnit = initialWorkUnit;
         this.nextOnPredicateSuccess = nextOnPredicateSuccess;
         this.nextOnPredicateFailure = nextOnPredicateFailure;
         this.predicate = predicate;
@@ -62,7 +62,7 @@ public class ConditionalFlow extends AbstractWorkFlow {
      * {@inheritDoc}
      */
     public WorkReport call(WorkContext workContext) {
-        WorkReport jobReport = toExecute.call(workContext);
+        WorkReport jobReport = initialWorkUnit.call(workContext);
         if (predicate.apply(jobReport)) {
             jobReport = nextOnPredicateSuccess.call(workContext);
         } else {
@@ -88,7 +88,7 @@ public class ConditionalFlow extends AbstractWorkFlow {
         }
 
         public interface ExecuteStep {
-            WhenStep execute(Work work);
+            WhenStep execute(Work initialWorkUnit);
         }
 
         public interface WhenStep {
@@ -110,12 +110,12 @@ public class ConditionalFlow extends AbstractWorkFlow {
         private static class BuildSteps implements NameStep, ExecuteStep, WhenStep, ThenStep, OtherwiseStep, BuildStep {
 
             private String name;
-            private Work toExecute, nextOnPredicateSuccess, nextOnPredicateFailure;
+            private Work initialWorkUnit, nextOnPredicateSuccess, nextOnPredicateFailure;
             private WorkReportPredicate predicate;
 
             BuildSteps() {
                 this.name = UUID.randomUUID().toString();
-                this.toExecute = new NoOpWork();
+                this.initialWorkUnit = new NoOpWork();
                 this.nextOnPredicateSuccess = new NoOpWork();
                 this.nextOnPredicateFailure = new NoOpWork();
                 this.predicate = WorkReportPredicate.ALWAYS_FALSE;
@@ -128,8 +128,8 @@ public class ConditionalFlow extends AbstractWorkFlow {
             }
 
             @Override
-            public WhenStep execute(Work work) {
-                this.toExecute = work;
+            public WhenStep execute(Work initialWorkUnit) {
+                this.initialWorkUnit = initialWorkUnit;
                 return this;
             }
 
@@ -153,7 +153,7 @@ public class ConditionalFlow extends AbstractWorkFlow {
 
             @Override
             public ConditionalFlow build() {
-                return new ConditionalFlow(this.name, this.toExecute,
+                return new ConditionalFlow(this.name, this.initialWorkUnit,
                         this.nextOnPredicateSuccess, this.nextOnPredicateFailure,
                         this.predicate);
             }
