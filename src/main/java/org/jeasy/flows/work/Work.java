@@ -31,7 +31,7 @@ import java.util.UUID;
  * <ul>
  *     <li>catch any checked or unchecked exceptions and return a {@link WorkReport}
  *     instance with a status of {@link WorkStatus#FAILED} and a reference to the exception</li>
- *     <li>make sure the work in finished in a finite amount of time</li>
+ *     <li>make sure the work is finished in a finite amount of time</li>
  * </ul>
  *
  * Work name must be unique within a workflow definition.
