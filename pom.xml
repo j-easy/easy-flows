@@ -10,7 +10,7 @@
 
     <groupId>org.jeasy</groupId>
     <artifactId>easy-flows</artifactId>
-    <version>0.3</version>
+    <version>0.4-SNAPSHOT</version>
 
     <name>Easy Flows</name>
     <description>The simple, stupid workflow engine for Java</description>
@@ -33,7 +33,7 @@
         <url>git@github.com:j-easy/easy-flows.git</url>
         <connection>scm:git:git@github.com:j-easy/easy-flows.git</connection>
         <developerConnection>scm:git:git@github.com:j-easy/easy-flows.git</developerConnection>
-        <tag>easy-flows-0.3</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <issueManagement>
