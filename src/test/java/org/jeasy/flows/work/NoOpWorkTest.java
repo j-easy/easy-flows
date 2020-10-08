@@ -29,7 +29,7 @@ import org.junit.Test;
 
 public class NoOpWorkTest {
 
-	private NoOpWork work = new NoOpWork();
+	private final NoOpWork work = new NoOpWork();
 
 	@Test
 	public void getName() {

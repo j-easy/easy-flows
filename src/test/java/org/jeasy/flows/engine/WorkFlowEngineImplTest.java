@@ -47,7 +47,7 @@ import static org.jeasy.flows.workflow.SequentialFlow.Builder.aNewSequentialFlow
 
 public class WorkFlowEngineImplTest {
 
-    private WorkFlowEngine workFlowEngine = new WorkFlowEngineImpl();
+    private final WorkFlowEngine workFlowEngine = new WorkFlowEngineImpl();
 
     @Test
     public void run() {

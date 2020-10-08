@@ -33,13 +33,12 @@ import org.junit.Test;
 public class ParallelFlowReportTest {
 
 	private Exception exception;
-	private WorkContext workContext;
 	private ParallelFlowReport parallelFlowReport;
 
 	@Before
 	public void setUp() {
 		exception = new Exception("test exception");
-		workContext = new WorkContext();
+		WorkContext workContext = new WorkContext();
 		parallelFlowReport = new ParallelFlowReport();
 		parallelFlowReport.add(new DefaultWorkReport(WorkStatus.FAILED, workContext, exception));
 		parallelFlowReport.add(new DefaultWorkReport(WorkStatus.COMPLETED, workContext));
