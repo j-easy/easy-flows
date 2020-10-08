@@ -23,8 +23,6 @@
  */
 package org.jeasy.flows.engine;
 
-import java.io.IOException;
-
 /**
  * Main entry point to create {@link WorkFlowEngine} instances.
  *
