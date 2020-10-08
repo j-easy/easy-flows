@@ -47,7 +47,7 @@ class ParallelFlowExecutor {
     List<WorkReport> executeInParallel(List<Work> workUnits, WorkContext workContext) {
         // prepare tasks for parallel submission
         List<Callable<WorkReport>> tasks = new ArrayList<>(workUnits.size());
-        workUnits.forEach(work -> tasks.add(() -> work.call(workContext)));
+        workUnits.forEach(work -> tasks.add(() -> work.execute(workContext)));
 
         // submit work units and wait for results
         List<Future<WorkReport>> futures;

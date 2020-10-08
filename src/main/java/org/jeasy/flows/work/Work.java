@@ -57,5 +57,5 @@ public interface Work {
      * @param workContext context in which this unit of work is being executed
      * @return the execution report
      */
-    WorkReport call(WorkContext workContext);
+    WorkReport execute(WorkContext workContext);
 }

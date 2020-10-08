@@ -36,7 +36,7 @@ class WorkFlowEngineImpl implements WorkFlowEngine {
 
     public WorkReport run(WorkFlow workFlow, WorkContext workContext) {
         LOGGER.info("Running workflow ''{}''", workFlow.getName());
-        return workFlow.call(workContext);
+        return workFlow.execute(workContext);
     }
 
 }

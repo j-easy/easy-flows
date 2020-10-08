@@ -56,10 +56,10 @@ public class SequentialFlow extends AbstractWorkFlow {
     /**
      * {@inheritDoc}
      */
-    public WorkReport call(WorkContext workContext) {
+    public WorkReport execute(WorkContext workContext) {
         WorkReport workReport = null;
         for (Work work : workUnits) {
-            workReport = work.call(workContext);
+            workReport = work.execute(workContext);
             if (workReport != null && FAILED.equals(workReport.getStatus())) {
                 LOGGER.info("Work unit ''{}'' has failed, skipping subsequent work units", work.getName());
                 break;

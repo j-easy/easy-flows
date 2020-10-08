@@ -64,7 +64,7 @@ public class ParallelFlow extends AbstractWorkFlow {
     /**
      * {@inheritDoc}
      */
-    public ParallelFlowReport call(WorkContext workContext) {
+    public ParallelFlowReport execute(WorkContext workContext) {
         ParallelFlowReport workFlowReport = new ParallelFlowReport();
         List<WorkReport> workReports = workExecutor.executeInParallel(workUnits, workContext);
         workFlowReport.addAll(workReports);

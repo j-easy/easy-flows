@@ -43,10 +43,10 @@ public class RepeatFlowTest {
                 .build();
 
         // when
-        repeatFlow.call(workContext);
+        repeatFlow.execute(workContext);
 
         // then
-        Mockito.verify(work, Mockito.times(1)).call(workContext);
+        Mockito.verify(work, Mockito.times(1)).execute(workContext);
     }
 
     @Test
@@ -60,10 +60,10 @@ public class RepeatFlowTest {
                 .build();
 
         // when
-        repeatFlow.call(workContext);
+        repeatFlow.execute(workContext);
 
         // then
-        Mockito.verify(work, Mockito.times(3)).call(workContext);
+        Mockito.verify(work, Mockito.times(3)).execute(workContext);
     }
 
 }

@@ -35,7 +35,7 @@ import java.util.List;
 public class ParallelFlowTest {
 
     @Test
-    public void call() {
+    public void testExecute() {
         // given
         Work work1 = Mockito.mock(Work.class);
         Work work2 = Mockito.mock(Work.class);
@@ -45,7 +45,7 @@ public class ParallelFlowTest {
         ParallelFlow parallelFlow = new ParallelFlow("pf", works, parallelFlowExecutor);
 
         // when
-        ParallelFlowReport parallelFlowReport = parallelFlow.call(workContext);
+        ParallelFlowReport parallelFlowReport = parallelFlow.execute(workContext);
 
         // then
         Assertions.assertThat(parallelFlowReport).isNotNull();

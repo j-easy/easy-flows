@@ -48,12 +48,12 @@ public class ConditionalFlowTest {
                 .build();
 
         // when
-        conditionalFlow.call(workContext);
+        conditionalFlow.execute(workContext);
 
         // then
-        Mockito.verify(toExecute, Mockito.times(1)).call(workContext);
-        Mockito.verify(nextOnPredicateSuccess, Mockito.times(1)).call(workContext);
-        Mockito.verify(nextOnPredicateFailure, Mockito.never()).call(workContext);
+        Mockito.verify(toExecute, Mockito.times(1)).execute(workContext);
+        Mockito.verify(nextOnPredicateSuccess, Mockito.times(1)).execute(workContext);
+        Mockito.verify(nextOnPredicateFailure, Mockito.never()).execute(workContext);
     }
 
     @Test
@@ -73,12 +73,12 @@ public class ConditionalFlowTest {
                 .build();
 
         // when
-        conditionalFlow.call(workContext);
+        conditionalFlow.execute(workContext);
 
         // then
-        Mockito.verify(toExecute, Mockito.times(1)).call(workContext);
-        Mockito.verify(nextOnPredicateFailure, Mockito.times(1)).call(workContext);
-        Mockito.verify(nextOnPredicateSuccess, Mockito.never()).call(workContext);
+        Mockito.verify(toExecute, Mockito.times(1)).execute(workContext);
+        Mockito.verify(nextOnPredicateFailure, Mockito.times(1)).execute(workContext);
+        Mockito.verify(nextOnPredicateSuccess, Mockito.never()).execute(workContext);
     }
 
 }

@@ -40,7 +40,7 @@ import java.util.concurrent.Executors;
 public class ParallelFlowExecutorTest {
 
     @Test
-    public void call() {
+    public void testExecute() {
 
         // given
         ExecutorService executorService = Executors.newFixedThreadPool(2);
@@ -76,7 +76,7 @@ public class ParallelFlowExecutorTest {
         }
 
         @Override
-        public WorkReport call(WorkContext workContext) {
+        public WorkReport execute(WorkContext workContext) {
             executed = true;
             return new DefaultWorkReport(status, workContext);
         }

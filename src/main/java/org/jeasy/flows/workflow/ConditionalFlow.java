@@ -61,13 +61,13 @@ public class ConditionalFlow extends AbstractWorkFlow {
     /**
      * {@inheritDoc}
      */
-    public WorkReport call(WorkContext workContext) {
-        WorkReport jobReport = initialWorkUnit.call(workContext);
+    public WorkReport execute(WorkContext workContext) {
+        WorkReport jobReport = initialWorkUnit.execute(workContext);
         if (predicate.apply(jobReport)) {
-            jobReport = nextOnPredicateSuccess.call(workContext);
+            jobReport = nextOnPredicateSuccess.execute(workContext);
         } else {
             if (nextOnPredicateFailure != null && !(nextOnPredicateFailure instanceof NoOpWork)) { // else is optional
-                jobReport = nextOnPredicateFailure.call(workContext);
+                jobReport = nextOnPredicateFailure.execute(workContext);
             }
         }
         return jobReport;

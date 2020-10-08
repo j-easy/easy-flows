@@ -59,7 +59,7 @@ public class WorkFlowEngineImplTest {
         workFlowEngine.run(workFlow,workContext);
 
         // then
-        Mockito.verify(workFlow).call(workContext);
+        Mockito.verify(workFlow).execute(workContext);
     }
 
     /**
@@ -177,7 +177,7 @@ public class WorkFlowEngineImplTest {
             return "print message work";
         }
 
-        public WorkReport call(WorkContext workContext) {
+        public WorkReport execute(WorkContext workContext) {
             System.out.println(message);
             return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
         }
@@ -198,7 +198,7 @@ public class WorkFlowEngineImplTest {
         }
 
         @Override
-        public WorkReport call(WorkContext workContext) {
+        public WorkReport execute(WorkContext workContext) {
             String input = (String) workContext.get("partition" + partition);
             workContext.put("wordCountInPartition" + partition, input.split(" ").length);
             return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);
@@ -213,7 +213,7 @@ public class WorkFlowEngineImplTest {
         }
 
         @Override
-        public WorkReport call(WorkContext workContext) {
+        public WorkReport execute(WorkContext workContext) {
             Set<Map.Entry<String, Object>> entrySet = workContext.getEntrySet();
             int sum = 0;
             for (Map.Entry<String, Object> entry : entrySet) {
@@ -234,7 +234,7 @@ public class WorkFlowEngineImplTest {
         }
 
         @Override
-        public WorkReport call(WorkContext workContext) {
+        public WorkReport execute(WorkContext workContext) {
             int totalCount = (int) workContext.get("totalCount");
             System.out.println(totalCount);
             return new DefaultWorkReport(WorkStatus.COMPLETED, workContext);

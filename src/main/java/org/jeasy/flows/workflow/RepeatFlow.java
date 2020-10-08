@@ -50,10 +50,10 @@ public class RepeatFlow extends AbstractWorkFlow {
     /**
      * {@inheritDoc}
      */
-    public WorkReport call(WorkContext workContext) {
+    public WorkReport execute(WorkContext workContext) {
         WorkReport workReport;
         do {
-            workReport = work.call(workContext);
+            workReport = work.execute(workContext);
         } while (predicate.apply(workReport));
         return workReport;
     }
