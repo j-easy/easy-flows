@@ -25,7 +25,7 @@ package org.jeasy.flows.workflow;
 
 abstract class AbstractWorkFlow implements WorkFlow {
 
-    private String name;
+    private final String name;
 
     AbstractWorkFlow(String name) {
         this.name = name;

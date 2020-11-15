@@ -53,9 +53,9 @@ public interface WorkReportPredicate {
      */
     class TimesPredicate implements WorkReportPredicate {
 
-        private int times;
+        private final int times;
 
-        private AtomicInteger counter = new AtomicInteger();
+        private final AtomicInteger counter = new AtomicInteger();
 
         public TimesPredicate(int times) {
             this.times = times;

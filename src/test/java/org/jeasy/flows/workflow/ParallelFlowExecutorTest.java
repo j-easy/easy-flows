@@ -61,8 +61,8 @@ public class ParallelFlowExecutorTest {
 
     static class HelloWorldWork implements Work {
 
-        private String name;
-        private WorkStatus status;
+        private final String name;
+        private final WorkStatus status;
         private boolean executed;
 
         HelloWorldWork(String name, WorkStatus status) {

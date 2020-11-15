@@ -38,7 +38,7 @@ import java.util.Map;
  */
 public class ParallelFlowReport implements WorkReport {
 
-    private List<WorkReport> reports;
+    private final List<WorkReport> reports;
 
     /**
      * Create a new {@link ParallelFlowReport}.

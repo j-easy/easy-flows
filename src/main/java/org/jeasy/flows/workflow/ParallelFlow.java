@@ -52,8 +52,8 @@ import java.util.concurrent.ExecutorService;
  */
 public class ParallelFlow extends AbstractWorkFlow {
 
-    private List<Work> workUnits = new ArrayList<>();
-    private ParallelFlowExecutor workExecutor;
+    private final List<Work> workUnits = new ArrayList<>();
+    private final ParallelFlowExecutor workExecutor;
 
     ParallelFlow(String name, List<Work> workUnits, ParallelFlowExecutor parallelFlowExecutor) {
         super(name);
@@ -110,7 +110,7 @@ public class ParallelFlow extends AbstractWorkFlow {
         private static class BuildSteps implements NameStep, ExecuteStep, WithStep, BuildStep {
 
             private String name;
-            private List<Work> works;
+            private final List<Work> works;
             private ExecutorService executorService;
 
             public BuildSteps() {

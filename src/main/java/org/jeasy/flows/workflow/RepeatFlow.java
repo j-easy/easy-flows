@@ -38,8 +38,8 @@ import java.util.UUID;
  */
 public class RepeatFlow extends AbstractWorkFlow {
 
-    private Work work;
-    private WorkReportPredicate predicate;
+    private final Work work;
+    private final WorkReportPredicate predicate;
 
     RepeatFlow(String name, Work work, WorkReportPredicate predicate) {
         super(name);

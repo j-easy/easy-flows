@@ -46,7 +46,7 @@ public class SequentialFlow extends AbstractWorkFlow {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SequentialFlow.class.getName());
 
-    private List<Work> workUnits = new ArrayList<>();
+    private final List<Work> workUnits = new ArrayList<>();
 
     SequentialFlow(String name, List<Work> workUnits) {
         super(name);
@@ -96,7 +96,7 @@ public class SequentialFlow extends AbstractWorkFlow {
         private static class BuildSteps implements NameStep, ExecuteStep, ThenStep {
 
             private String name;
-            private List<Work> works;
+            private final List<Work> works;
             
             BuildSteps() {
                 this.name = UUID.randomUUID().toString();

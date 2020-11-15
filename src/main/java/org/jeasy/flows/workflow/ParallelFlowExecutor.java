@@ -38,7 +38,7 @@ import java.util.concurrent.Future;
 
 class ParallelFlowExecutor {
 
-    private ExecutorService workExecutor;
+    private final ExecutorService workExecutor;
 
     ParallelFlowExecutor(ExecutorService workExecutor) {
         this.workExecutor = workExecutor;

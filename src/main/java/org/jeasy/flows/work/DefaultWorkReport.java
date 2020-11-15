@@ -30,8 +30,8 @@ package org.jeasy.flows.work;
  */
 public class DefaultWorkReport implements WorkReport {
 
-    private WorkStatus status;
-    private WorkContext workContext;
+    private final WorkStatus status;
+    private final WorkContext workContext;
     private Throwable error;
 
     /**

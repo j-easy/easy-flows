@@ -167,7 +167,7 @@ public class WorkFlowEngineImplTest {
 
     static class PrintMessageWork implements Work {
 
-        private String message;
+        private final String message;
 
         public PrintMessageWork(String message) {
             this.message = message;
@@ -186,7 +186,7 @@ public class WorkFlowEngineImplTest {
     
     static class WordCountWork implements Work {
 
-        private int partition;
+        private final int partition;
 
         public WordCountWork(int partition) {
             this.partition = partition;

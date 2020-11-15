@@ -47,8 +47,8 @@ import java.util.UUID;
  */
 public class ConditionalFlow extends AbstractWorkFlow {
 
-    private Work initialWorkUnit, nextOnPredicateSuccess, nextOnPredicateFailure;
-    private WorkReportPredicate predicate;
+    private final Work initialWorkUnit, nextOnPredicateSuccess, nextOnPredicateFailure;
+    private final WorkReportPredicate predicate;
 
     ConditionalFlow(String name, Work initialWorkUnit, Work nextOnPredicateSuccess, Work nextOnPredicateFailure, WorkReportPredicate predicate) {
         super(name);
