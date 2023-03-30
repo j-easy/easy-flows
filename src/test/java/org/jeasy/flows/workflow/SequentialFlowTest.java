@@ -28,14 +28,14 @@ import java.util.List;
 
 import org.jeasy.flows.work.Work;
 import org.jeasy.flows.work.WorkContext;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
 public class SequentialFlowTest {
 
     @Test
-    public void testExecute() {
+    void testExecute() {
         // given
         Work work1 = Mockito.mock(Work.class);
         Work work2 = Mockito.mock(Work.class);
@@ -59,7 +59,7 @@ public class SequentialFlowTest {
     }
 
     @Test
-    public void testPassingMultipleWorkUnitsAtOnce() {
+    void testPassingMultipleWorkUnitsAtOnce() {
         // given
         Work work1 = Mockito.mock(Work.class);
         Work work2 = Mockito.mock(Work.class);

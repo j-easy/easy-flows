@@ -34,7 +34,7 @@ import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReport;
 import org.jeasy.flows.work.WorkStatus;
 import org.jeasy.flows.workflow.*;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,7 +50,7 @@ public class WorkFlowEngineImplTest {
     private final WorkFlowEngine workFlowEngine = new WorkFlowEngineImpl();
 
     @Test
-    public void run() {
+    void run() {
         // given
         WorkFlow workFlow = Mockito.mock(WorkFlow.class);
         WorkContext workContext = Mockito.mock(WorkContext.class);
@@ -67,7 +67,7 @@ public class WorkFlowEngineImplTest {
      */
 
     @Test
-    public void composeWorkFlowFromSeparateFlowsAndExecuteIt() {
+    void composeWorkFlowFromSeparateFlowsAndExecuteIt() {
 
         PrintMessageWork work1 = new PrintMessageWork("foo");
         PrintMessageWork work2 = new PrintMessageWork("hello");
@@ -107,7 +107,7 @@ public class WorkFlowEngineImplTest {
     }
 
     @Test
-    public void defineWorkFlowInlineAndExecuteIt() {
+    void defineWorkFlowInlineAndExecuteIt() {
 
         PrintMessageWork work1 = new PrintMessageWork("foo");
         PrintMessageWork work2 = new PrintMessageWork("hello");
@@ -141,7 +141,7 @@ public class WorkFlowEngineImplTest {
     }
 
     @Test
-    public void useWorkContextToPassInitialParametersAndShareDataBetweenWorkUnits() {
+    void useWorkContextToPassInitialParametersAndShareDataBetweenWorkUnits() {
         WordCountWork work1 = new WordCountWork(1);
         WordCountWork work2 = new WordCountWork(2);
         AggregateWordCountsWork work3 = new AggregateWordCountsWork();

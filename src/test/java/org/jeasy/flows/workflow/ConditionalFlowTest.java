@@ -26,13 +26,13 @@ package org.jeasy.flows.workflow;
 import org.jeasy.flows.work.Work;
 import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReportPredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 public class ConditionalFlowTest {
 
     @Test
-    public void callOnPredicateSuccess() {
+    void callOnPredicateSuccess() {
         // given
         Work toExecute = Mockito.mock(Work.class);
         Work nextOnPredicateSuccess = Mockito.mock(Work.class);
@@ -57,7 +57,7 @@ public class ConditionalFlowTest {
     }
 
     @Test
-    public void callOnPredicateFailure() {
+    void callOnPredicateFailure() {
         // given
         Work toExecute = Mockito.mock(Work.class);
         Work nextOnPredicateSuccess = Mockito.mock(Work.class);

@@ -27,15 +27,15 @@ import org.assertj.core.api.Assertions;
 import org.jeasy.flows.work.DefaultWorkReport;
 import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkStatus;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ParallelFlowReportTest {
 
 	private Exception exception;
 	private ParallelFlowReport parallelFlowReport;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		exception = new Exception("test exception");
 		WorkContext workContext = new WorkContext();
@@ -44,18 +44,18 @@ public class ParallelFlowReportTest {
 		parallelFlowReport.add(new DefaultWorkReport(WorkStatus.COMPLETED, workContext));
 	}
 
-	@Test
-	public void testGetStatus() {
+    @Test
+    void testGetStatus() {
 		Assertions.assertThat(parallelFlowReport.getStatus()).isEqualTo(WorkStatus.FAILED);
 	}
 
-	@Test
-	public void testGetError() {
+    @Test
+    void testGetError() {
 		Assertions.assertThat(parallelFlowReport.getError()).isEqualTo(exception);
 	}
 
-	@Test
-	public void testGetReports() {
+    @Test
+    void testGetReports() {
 		Assertions.assertThat(parallelFlowReport.getReports()).hasSize(2);
 	}
 }
