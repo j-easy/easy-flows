@@ -26,13 +26,13 @@ package org.jeasy.flows.workflow;
 import org.jeasy.flows.work.Work;
 import org.jeasy.flows.work.WorkContext;
 import org.jeasy.flows.work.WorkReportPredicate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 public class RepeatFlowTest {
 
     @Test
-    public void testRepeatUntil() {
+    void testRepeatUntil() {
         // given
         Work work = Mockito.mock(Work.class);
         WorkContext workContext = Mockito.mock(WorkContext.class);
@@ -50,7 +50,7 @@ public class RepeatFlowTest {
     }
 
     @Test
-    public void testRepeatTimes() {
+    void testRepeatTimes() {
         // given
         Work work = Mockito.mock(Work.class);
         WorkContext workContext = Mockito.mock(WorkContext.class);

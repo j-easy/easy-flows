@@ -26,7 +26,7 @@ package org.jeasy.flows.workflow;
 import org.assertj.core.api.Assertions;
 import org.jeasy.flows.work.Work;
 import org.jeasy.flows.work.WorkContext;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.Arrays;
@@ -35,7 +35,7 @@ import java.util.List;
 public class ParallelFlowTest {
 
     @Test
-    public void testExecute() {
+    void testExecute() {
         // given
         Work work1 = Mockito.mock(Work.class);
         Work work2 = Mockito.mock(Work.class);
