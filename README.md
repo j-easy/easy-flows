@@ -122,7 +122,7 @@ There are currently good workflow engines, but since they try to implement BPMN,
 Most of BPMN concepts are not essential to many applications, and building such applications on top of a heavy engine is not efficient.
 
 Easy Flows tries to provide a simple alternative with natural APIs that are easy to think about along with basic flows that most small/medium sized
- applications would require. If your business process requires a A0 paper to be drawn down, Easy Flows is probably not the right choice for you.
+ applications would require. If your business process requires an A0 paper to be drawn down, Easy Flows is probably not the right choice for you.
 
 ## Contribution
 
