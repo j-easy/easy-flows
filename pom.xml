@@ -21,7 +21,7 @@
         <slf4j.version>1.7.30</slf4j.version>
         <java.version>1.8</java.version>
         <junit.version>4.13.1</junit.version>
-        <assertj.version>3.17.2</assertj.version>
+        <assertj.version>3.27.7</assertj.version>
         <mockito.version>3.5.13</mockito.version>
         <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
